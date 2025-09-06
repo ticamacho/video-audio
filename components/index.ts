@@ -1,4 +1,4 @@
 import VideoLayout from "./video-layout";
-import CustomerControlBar from "./customer-control-bar";
+import ControlBar from "./control-bar";
 
-export { VideoLayout, CustomerControlBar };
+export { VideoLayout, ControlBar };

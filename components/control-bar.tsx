@@ -10,13 +10,11 @@ import { Track } from "livekit-client";
 import { LeaveIcon } from "@livekit/components-react";
 import React from "react";
 
-interface CustomerControlBarProps {
+interface ControlBarProps {
   onLeave?: () => Promise<void>;
 }
 
-export default function CustomerControlBar({
-  onLeave,
-}: CustomerControlBarProps) {
+export default function ControlBar({ onLeave }: ControlBarProps) {
   const {
     saveAudioInputEnabled,
     saveVideoInputEnabled,
