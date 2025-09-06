@@ -1,0 +1,16 @@
+export enum Device {
+  MICROPHONE = "MICROPHONE",
+  SPEAKER = "SPEAKER",
+  CAMERA = "CAMERA",
+  NETWORK_UDP = "NETWORK_UDP",
+  NETWORK_TCP = "NETWORK_TCP",
+  NETWORK_VIDEO = "NETWORK_VIDEO",
+  NETWORK_AUDIO = "NETWORK_AUDIO",
+}
+
+export enum DEVICE_PERMISSION_STATE {
+  REQUIRED = "required",
+  GRANTED = "granted",
+  DECLINED = "declined",
+  OS_BLOCKED = "os_blocked",
+}
