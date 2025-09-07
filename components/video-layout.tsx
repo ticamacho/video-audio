@@ -8,10 +8,12 @@ import {
   TrackReferenceOrPlaceholder,
   ParticipantTile,
   ParticipantName,
+  useRoomInfo,
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
 import { CopyIcon } from "@phosphor-icons/react";
+import { getSharingURL } from "../utils/livekit";
 
 interface ResizableVideoLayoutProps {
   participants: (RemoteParticipant | LocalParticipant)[];
@@ -46,6 +48,7 @@ export default function VideoLayout({
   cameraTrackOptions = {},
   controlBar,
 }: ResizableVideoLayoutProps) {
+  const roomInfo = useRoomInfo();
   const [rightPanelWidth, setRightPanelWidth] = useState(
     DEFAULT_RIGHT_PANEL_WIDTH,
   );
@@ -75,21 +78,22 @@ export default function VideoLayout({
       <div className="h-14 px-3 flex items-center justify-between">
         <LiveIndicator elapsedTime="11:00" isLive={true} />
         <SharingControls
-          onShareURL={() => {
-            navigator.clipboard.writeText(window.location.href);
+          roomName={roomInfo?.name}
+          onShareURL={(url: string) => {
+            navigator.clipboard.writeText(url);
           }}
         />
       </div>
 
-      <div className="flex flex-1 relative">
+      <div className="flex flex-1 relative gap-0.5">
         {/* Main section */}
         <div
-          className="relative bg-black"
+          className="relative bg-black rounded-lg overflow-hidden"
           style={{ width: `calc(100% - ${rightPanelWidth}px)` }}
         >
           {!tracks.length ? (
-            <div className="flex items-center w-full h-full justify-center bg-black">
-              <span className="text-primary-content text-sm">
+            <div className="flex items-center w-full h-full justify-center bg-gray-800">
+              <span className="text-primary-content">
                 No screen is being shared. Customer screen will appear here.
               </span>
             </div>
@@ -123,7 +127,7 @@ export default function VideoLayout({
 
         {/* Resize handle */}
         <div
-          className={`w-1 bg-gray-700 hover:bg-blue-500 cursor-col-resize transition-colors ${
+          className={`w-1 hover:bg-blue-500 cursor-col-resize transition-colors ${
             isResizing ? "bg-blue-500" : ""
           }`}
           onMouseDown={handleStartResizing}
@@ -131,7 +135,7 @@ export default function VideoLayout({
 
         {/* Right panel for video tracks */}
         <div
-          className="bg-gray-900 flex flex-col p-2 gap-2 overflow-y-auto"
+          className="bg-gray-800 flex flex-col gap-2 overflow-y-auto rounded-lg p-1"
           style={{ width: `${rightPanelWidth}px` }}
         >
           <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
@@ -199,13 +203,30 @@ function LiveIndicator({
   );
 }
 
-function SharingControls({ onShareURL }: { onShareURL: () => void }) {
+function SharingControls({
+  roomName,
+  onShareURL,
+}: {
+  roomName?: string;
+  onShareURL: (url: string) => void;
+}) {
+  const handleShare = () => {
+    const url = getSharingURL({
+      publicURL: process.env.NEXT_PUBLIC_BASE_URL!,
+      roomId: roomName!,
+      customerName: "Maria",
+    });
+    onShareURL(url);
+  };
+
+  const displayText = roomName ? `${roomName.slice(0, 8)}...` : "...";
+
   return (
     <button
       className="bg-gray-50 rounded-xl h-8 px-3 flex items-center justify-center hover:bg-gray-100 gap-2 cursor-pointer"
-      onClick={onShareURL}
+      onClick={handleShare}
     >
-      <span className="text-sm text-gray-600">22737-333...</span>
+      <span className="text-sm text-gray-600">{displayText}</span>
       <CopyIcon size={16} weight="bold" color="var(--color-gray-600)" />
     </button>
   );
