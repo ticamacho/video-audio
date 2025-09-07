@@ -202,10 +202,11 @@ function LiveIndicator({
 function SharingControls({ onShareURL }: { onShareURL: () => void }) {
   return (
     <button
-      className="border-2 border-gray-400 rounded-xl h-8 w-10 flex items-center justify-center hover:bg-gray-100"
+      className="bg-gray-50 rounded-xl h-8 px-3 flex items-center justify-center hover:bg-gray-100 gap-2 cursor-pointer"
       onClick={onShareURL}
     >
-      <CopyIcon size={16} weight="bold" color="var(--color-gray-500)" />
+      <span className="text-sm text-gray-600">22737-333...</span>
+      <CopyIcon size={16} weight="bold" color="var(--color-gray-600)" />
     </button>
   );
 }
