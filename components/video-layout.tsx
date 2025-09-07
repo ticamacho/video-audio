@@ -10,6 +10,8 @@ import {
   ParticipantName,
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
+import { cn } from "../utils/merge";
+import { CopyIcon } from "@phosphor-icons/react";
 
 interface ResizableVideoLayoutProps {
   participants: (RemoteParticipant | LocalParticipant)[];
@@ -65,20 +67,18 @@ export default function VideoLayout({
   return (
     <div
       data-lk-theme="default"
-      className="h-screen w-screen flex flex-col"
+      className="h-screen w-screen flex flex-col p-2 bg-white"
       onMouseMove={handleResizeMouseMove}
       onMouseUp={handleStopResizing}
     >
-      {/* Header actions */}
-      <div className="flex items-center justify-end bg-black border-b-4 border-gray-700 px-6 py-2">
-        {annotate && (
-          <button
-            onClick={onClearAnnotations}
-            className="btn btn-error btn-sm rounded-2xl"
-          >
-            Clear Annotations
-          </button>
-        )}
+      {/* Contextual section */}
+      <div className="h-14 px-3 flex items-center justify-between">
+        <LiveIndicator elapsedTime="11:00" isLive={true} />
+        <SharingControls
+          onShareURL={() => {
+            navigator.clipboard.writeText(window.location.href);
+          }}
+        />
       </div>
 
       <div className="flex flex-1 relative">
@@ -167,5 +167,45 @@ function ParticipantVideos({
         </div>
       )}
     </div>
+  );
+}
+
+function LiveIndicator({
+  isLive,
+  elapsedTime = "--:--:--",
+}: {
+  isLive: boolean;
+  elapsedTime: string;
+}) {
+  return (
+    <div className="flex items-center gap-2">
+      <div
+        className={cn(
+          "w-4 h-4 rounded-full flex items-center justify-center",
+          isLive ? "bg-brand-300" : "bg-red-200",
+        )}
+      >
+        <div
+          className={cn(
+            "w-1.5 h-1.5 rounded-full",
+            isLive ? "bg-brand-700" : "bg-red-700",
+          )}
+        />
+      </div>
+      <span className="text-sm text-gray-600">
+        {isLive ? elapsedTime : "Not Connected"}
+      </span>
+    </div>
+  );
+}
+
+function SharingControls({ onShareURL }: { onShareURL: () => void }) {
+  return (
+    <button
+      className="border-2 border-gray-400 rounded-xl h-8 w-10 flex items-center justify-center hover:bg-gray-100"
+      onClick={onShareURL}
+    >
+      <CopyIcon size={16} weight="bold" color="var(--color-gray-500)" />
+    </button>
   );
 }
