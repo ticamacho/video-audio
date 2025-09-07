@@ -21,7 +21,6 @@ import {
   PencilSimpleLineIcon,
 } from "@phosphor-icons/react";
 import { styles } from "../styles";
-import { on } from "events";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
