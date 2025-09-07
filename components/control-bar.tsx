@@ -4,11 +4,12 @@ import {
   DisconnectButton,
   TrackToggle,
   MediaDeviceMenu,
-  usePersistentUserChoices,
+  usePersistentUserChoices
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
 import { LeaveIcon } from "@livekit/components-react";
 import React from "react";
+import { CaretDownIcon, MicrophoneIcon } from "@phosphor-icons/react";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
@@ -19,7 +20,7 @@ export default function ControlBar({ onLeave }: ControlBarProps) {
     saveAudioInputEnabled,
     saveVideoInputEnabled,
     saveAudioInputDeviceId,
-    saveVideoInputDeviceId,
+    saveVideoInputDeviceId
   } = usePersistentUserChoices({ preventSave: false });
 
   const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
@@ -27,31 +28,36 @@ export default function ControlBar({ onLeave }: ControlBarProps) {
   const microphoneOnChange = React.useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
       isUserInitiated ? saveAudioInputEnabled(enabled) : null,
-    [saveAudioInputEnabled],
+    [saveAudioInputEnabled]
   );
 
   const cameraOnChange = React.useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
       isUserInitiated ? saveVideoInputEnabled(enabled) : null,
-    [saveVideoInputEnabled],
+    [saveVideoInputEnabled]
   );
 
   const onScreenShareChange = React.useCallback(
     (enabled: boolean) => {
       setIsScreenShareEnabled(enabled);
     },
-    [setIsScreenShareEnabled],
+    [setIsScreenShareEnabled]
   );
 
   return (
     <div className="lk-control-bar" data-lk-theme="default">
-      <div className="lk-button-group">
+      {/* <div className="lk-button-group"> */}
+      <div className="flex h-11 flex-col rounded-2xl border-2 border-gray-400 px-3 text-gray-400">
         <TrackToggle
           source={Track.Source.Microphone}
-          showIcon={true}
           onChange={microphoneOnChange}
+          className="h-100 bg-gray-50 pr-3 pl-4"
         >
-          Microphone
+          <MicrophoneIcon
+            color="var(--color-gray-400)"
+            size={20}
+            weight="bold"
+          />
         </TrackToggle>
         <div className="lk-button-group-menu">
           <MediaDeviceMenu
@@ -59,7 +65,13 @@ export default function ControlBar({ onLeave }: ControlBarProps) {
             onActiveDeviceChange={(_kind, deviceId) =>
               saveAudioInputDeviceId(deviceId ?? "default")
             }
-          />
+          >
+            <CaretDownIcon
+              size={20}
+              weight="bold"
+              color="var(--color-gray-400)"
+            />
+          </MediaDeviceMenu>
         </div>
       </div>
 
