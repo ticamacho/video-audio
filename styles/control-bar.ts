@@ -18,7 +18,7 @@ export const controlBarStyles = {
 
   // Icon button styling (for buttons that only have an icon, no menu)
   iconButton:
-    "bg-white! gap-0! text-gray-500 border-none px-4  hover:bg-gray-50! hover:cursor-pointer data-[lk-enabled=true]:bg-gray-100!",
+    "bg-white! gap-0! text-gray-500 border-none px-4 hover:bg-gray-50! hover:cursor-pointer data-[lk-enabled=true]:bg-gray-100! h-11",
 
   // Leave button
   leaveGroup: "border-2 rounded-2xl border-plum-600 flex overflow-hidden",

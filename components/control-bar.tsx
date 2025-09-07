@@ -18,14 +18,22 @@ import {
   VideoCameraIcon,
   MonitorArrowUpIcon,
   SignOutIcon,
+  PencilSimpleLineIcon,
 } from "@phosphor-icons/react";
 import { styles } from "../styles";
+import { on } from "events";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
+  onAnnotationToggle?: (enabled: boolean) => void;
+  isAnnotationEnabled?: boolean;
 }
 
-export default function ControlBar({ onLeave }: ControlBarProps) {
+export default function ControlBar({
+  onLeave,
+  onAnnotationToggle,
+  isAnnotationEnabled = false,
+}: ControlBarProps) {
   const component = styles.controlBar;
   const {
     saveAudioInputEnabled,
@@ -152,6 +160,23 @@ export default function ControlBar({ onLeave }: ControlBarProps) {
             {/* {isScreenShareEnabled ? "Stop screen share" : "Share screen"} */}
           </TrackToggle>
         </div>
+
+        {onAnnotationToggle && (
+          <div className={component.buttonGroup}>
+            <button
+              onClick={() => onAnnotationToggle(!isAnnotationEnabled)}
+              className={component.iconButton}
+              data-lk-enabled={isAnnotationEnabled}
+              type="button"
+            >
+              <PencilSimpleLineIcon
+                size={component.iconSize}
+                weight={component.iconWeight as IconWeight}
+                color={component.iconDefaultColor}
+              />
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={component.leaveGroup}>
