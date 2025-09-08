@@ -10,6 +10,7 @@ import {
   ParticipantName,
   useRoomInfo,
 } from "@livekit/components-react";
+import { useIsMobile } from "../hooks";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
 import { CheckIcon, CopyIcon, IconWeight } from "@phosphor-icons/react";
@@ -36,6 +37,7 @@ interface ResizableVideoLayoutProps {
 const MIN_RIGHT_PANEL_WIDTH = 160;
 const MAX_RIGHT_PANEL_WIDTH = 640;
 const DEFAULT_RIGHT_PANEL_WIDTH = 320;
+const MOBILE_BREAKPOINT = 768; // Tailwind 'md' breakpoint
 let BASE_URL: string;
 
 export default function VideoLayout({
@@ -54,6 +56,7 @@ export default function VideoLayout({
 }: ResizableVideoLayoutProps) {
   BASE_URL = baseURL;
   const roomInfo = useRoomInfo();
+  const isMobile = useIsMobile(MOBILE_BREAKPOINT);
   const [rightPanelWidth, setRightPanelWidth] = useState(
     DEFAULT_RIGHT_PANEL_WIDTH,
   );
@@ -88,7 +91,7 @@ export default function VideoLayout({
   return (
     <div
       data-lk-theme="default"
-      className="h-screen w-screen flex flex-col p-2 bg-white"
+      className="h-screen w-screen flex flex-col p-2 bg-white min-w-md"
       onMouseMove={handleResizeMouseMove}
       onMouseUp={handleStopResizing}
     >
@@ -116,14 +119,14 @@ export default function VideoLayout({
       </div>
 
       {/* Main section */}
-      <div className="flex flex-1 relative gap-0.5">
+      <div className="flex flex-col-reverse md:flex-row flex-1 relative gap-0.5">
         <div
-          className="relative bg-black rounded-lg overflow-hidden"
-          style={{ width: `calc(100% - ${rightPanelWidth}px)` }}
+          className="relative bg-black rounded-lg overflow-hidden h-full"
+          style={isMobile ? {} : { width: `calc(100% - ${rightPanelWidth}px)` }}
         >
           {!tracks.length ? (
-            <div className="flex items-center w-full h-full justify-center bg-gray-800">
-              <span className="text-primary-content">
+            <div className="flex items-center w-full h-full justify-center bg-gray-900">
+              <span className="text-primary-content px-16">
                 No screen is being shared. Customer screen will appear here.
               </span>
             </div>
@@ -165,8 +168,8 @@ export default function VideoLayout({
 
         {/* Right panel for video tracks */}
         <div
-          className="bg-gray-800 flex flex-col gap-2 overflow-y-auto rounded-lg p-1"
-          style={{ width: `${rightPanelWidth}px` }}
+          className="bg-gray-900 flex flex-col gap-2 overflow-y-auto rounded-lg p-2"
+          style={isMobile ? {} : { width: `${rightPanelWidth}px` }}
         >
           <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
         </div>
@@ -190,9 +193,12 @@ function ParticipantVideos({
   );
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex md:flex-col gap-2">
       <TrackLoop tracks={cameraTracks}>
-        <ParticipantTile className="w-full aspect-video" />
+        <ParticipantTile className="w-full aspect-video flex-1">
+          <VideoTrack className="w-full h-full object-cover rounded" />
+          <ParticipantName className="badge absolute bottom-0 left-0" />
+        </ParticipantTile>
       </TrackLoop>
 
       {cameraTracks.length === 0 && (
