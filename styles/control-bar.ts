@@ -29,4 +29,5 @@ export const controlBarStyles = {
   iconDangerColor: "var(--color-plum-700)",
   iconWeight: "bold",
   iconSize: 20,
+  iconInteractivity: "pointer-events-none",
 };

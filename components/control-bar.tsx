@@ -6,7 +6,7 @@ import {
   MediaDeviceMenu,
   usePersistentUserChoices,
   useLocalParticipant,
-  useRemoteParticipants
+  useRemoteParticipants,
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
 import React, { useMemo } from "react";
@@ -19,9 +19,9 @@ import {
   VideoCameraIcon,
   MonitorArrowUpIcon,
   SignOutIcon,
-  PencilSimpleLineIcon
+  PencilSimpleLineIcon,
 } from "@phosphor-icons/react";
-import { styles } from "../styles";
+import { styles as ControlBarStyles } from "../styles";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
@@ -32,57 +32,59 @@ interface ControlBarProps {
 export default function ControlBar({
   onLeave,
   onAnnotationToggle,
-  isAnnotationEnabled = false
+  isAnnotationEnabled = false,
 }: ControlBarProps) {
-  const component = styles.controlBar;
+  const styles = ControlBarStyles.controlBar;
   const {
     saveAudioInputEnabled,
     saveVideoInputEnabled,
     saveAudioInputDeviceId,
-    saveVideoInputDeviceId
+    saveVideoInputDeviceId,
   } = usePersistentUserChoices({ preventSave: false });
 
   const { isMicrophoneEnabled, isCameraEnabled } = useLocalParticipant();
   const remoteParticipants = useRemoteParticipants();
   const screenBeingShared = useMemo(
     () => remoteParticipants.find((p) => p.isScreenShareEnabled),
-    [remoteParticipants]
+    [remoteParticipants],
   );
 
   const microphoneOnChange = React.useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
       isUserInitiated ? saveAudioInputEnabled(enabled) : null,
-    [saveAudioInputEnabled]
+    [saveAudioInputEnabled],
   );
 
   const cameraOnChange = React.useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
       isUserInitiated ? saveVideoInputEnabled(enabled) : null,
-    [saveVideoInputEnabled]
+    [saveVideoInputEnabled],
   );
 
   return (
-    <div className={component.controlBar}>
-      <div className={component.controlGroup}>
+    <div className={styles.controlBar}>
+      <div className={styles.controlGroup}>
         {/* Microphone controls */}
-        <div className={component.buttonGroup}>
+        <div className={styles.buttonGroup}>
           <TrackToggle
             source={Track.Source.Microphone}
             onChange={microphoneOnChange}
             showIcon={false}
-            className={component.button}
+            className={styles.button}
           >
             {isMicrophoneEnabled ? (
               <MicrophoneIcon
-                size={component.iconSize}
-                weight={component.iconWeight as IconWeight}
-                color={component.iconDefaultColor}
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconDefaultColor}
+                className={styles.iconInteractivity}
               />
             ) : (
               <MicrophoneSlashIcon
-                size={component.iconSize}
-                weight={component.iconWeight as IconWeight}
-                color={component.iconDefaultColor}
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconDefaultColor}
+                className={styles.iconInteractivity}
               />
             )}
           </TrackToggle>
@@ -91,35 +93,38 @@ export default function ControlBar({
             onActiveDeviceChange={(_kind, deviceId) =>
               saveAudioInputDeviceId(deviceId ?? "default")
             }
-            className={component.menuButton}
+            className={styles.menuButton}
           >
             <CaretDownIcon
-              size={component.iconSize}
-              weight={component.iconWeight as IconWeight}
-              color={component.iconDefaultColor}
+              size={styles.iconSize}
+              weight={styles.iconWeight as IconWeight}
+              color={styles.iconDefaultColor}
+              className={styles.iconInteractivity}
             />
           </MediaDeviceMenu>
         </div>
 
         {/* Camera controls */}
-        <div className={component.buttonGroup}>
+        <div className={styles.buttonGroup}>
           <TrackToggle
             source={Track.Source.Camera}
             showIcon={false}
             onChange={cameraOnChange}
-            className={component.button}
+            className={styles.button}
           >
             {isCameraEnabled ? (
               <VideoCameraIcon
-                size={component.iconSize}
-                weight={component.iconWeight as IconWeight}
-                color={component.iconDefaultColor}
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconDefaultColor}
+                className={styles.iconInteractivity}
               />
             ) : (
               <VideoCameraSlashIcon
-                size={component.iconSize}
-                weight={component.iconWeight as IconWeight}
-                color={component.iconDefaultColor}
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconDefaultColor}
+                className={styles.iconInteractivity}
               />
             )}
           </TrackToggle>
@@ -128,59 +133,63 @@ export default function ControlBar({
             onActiveDeviceChange={(_kind, deviceId) =>
               saveVideoInputDeviceId(deviceId ?? "default")
             }
-            className={component.menuButton}
+            className={styles.menuButton}
           >
             <CaretDownIcon
-              size={component.iconSize}
-              weight={component.iconWeight as IconWeight}
-              color={component.iconDefaultColor}
+              size={styles.iconSize}
+              weight={styles.iconWeight as IconWeight}
+              color={styles.iconDefaultColor}
+              className={styles.iconInteractivity}
             />
           </MediaDeviceMenu>
         </div>
       </div>
 
       {/* Share and annotation controls */}
-      <div className={component.controlGroup}>
-        <div className={component.buttonGroup}>
+      <div className={styles.controlGroup}>
+        <div className={styles.buttonGroup}>
           <TrackToggle
             source={Track.Source.ScreenShare}
             captureOptions={{ audio: true, selfBrowserSurface: "include" }}
             showIcon={false}
-            className={component.iconButton}
+            className={styles.iconButton}
           >
             <MonitorArrowUpIcon
-              size={component.iconSize}
-              weight={component.iconWeight as IconWeight}
-              color={component.iconDefaultColor}
+              size={styles.iconSize}
+              weight={styles.iconWeight as IconWeight}
+              color={styles.iconDefaultColor}
+              className={styles.iconInteractivity}
             />
             {/* {isScreenShareEnabled ? "Stop screen share" : "Share screen"} */}
           </TrackToggle>
         </div>
 
         {onAnnotationToggle && (
-          <div className={component.buttonGroup}>
+          <div className={styles.buttonGroup}>
             <button
               onClick={screenBeingShared ? onAnnotationToggle : undefined}
-              className={component.iconButton}
+              className={styles.iconButton}
               data-lk-enabled={isAnnotationEnabled}
               type="button"
             >
               <PencilSimpleLineIcon
-                size={component.iconSize}
-                weight={component.iconWeight as IconWeight}
-                color={component.iconDefaultColor}
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconDefaultColor}
+                className={styles.iconInteractivity}
               />
             </button>
           </div>
         )}
       </div>
 
-      <div className={component.leaveGroup}>
-        <DisconnectButton onClick={onLeave} className={component.leaveButton}>
+      <div className={styles.leaveGroup}>
+        <DisconnectButton onClick={onLeave} className={styles.leaveButton}>
           <SignOutIcon
-            size={component.iconSize}
-            weight={component.iconWeight as IconWeight}
-            color={component.iconDangerColor}
+            size={styles.iconSize}
+            weight={styles.iconWeight as IconWeight}
+            color={styles.iconDangerColor}
+            className={styles.iconInteractivity}
           />
         </DisconnectButton>
       </div>
