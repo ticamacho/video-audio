@@ -12,10 +12,12 @@ import {
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
-import { CopyIcon } from "@phosphor-icons/react";
+import { CheckIcon, CopyIcon, IconWeight } from "@phosphor-icons/react";
 import { getSharingURL } from "../utils/livekit";
+import { styles as componentStyles } from "../styles";
 
 interface ResizableVideoLayoutProps {
+  baseURL: string;
   participants: (RemoteParticipant | LocalParticipant)[];
   tracks: TrackReferenceOrPlaceholder[];
   videoRef: React.RefObject<HTMLVideoElement | null>;
@@ -34,8 +36,10 @@ interface ResizableVideoLayoutProps {
 const MIN_RIGHT_PANEL_WIDTH = 160;
 const MAX_RIGHT_PANEL_WIDTH = 640;
 const DEFAULT_RIGHT_PANEL_WIDTH = 320;
+let BASE_URL: string;
 
 export default function VideoLayout({
+  baseURL,
   tracks,
   videoRef,
   canvasRef,
@@ -48,11 +52,15 @@ export default function VideoLayout({
   cameraTrackOptions = {},
   controlBar,
 }: ResizableVideoLayoutProps) {
+  BASE_URL = baseURL;
   const roomInfo = useRoomInfo();
   const [rightPanelWidth, setRightPanelWidth] = useState(
     DEFAULT_RIGHT_PANEL_WIDTH,
   );
   const [isResizing, setIsResizing] = useState(false);
+  const [copiedURL, setCopiedURL] = useState(false);
+  const displayText = roomInfo.name ? `${roomInfo.name.slice(0, 8)}...` : "...";
+  const styles = componentStyles.video;
 
   const handleStartResizing = () => setIsResizing(true);
   const handleStopResizing = () => setIsResizing(false);
@@ -66,6 +74,16 @@ export default function VideoLayout({
       ),
     );
   };
+  const handleShareURL = () => {
+    const url = getSharingURL({
+      publicURL: BASE_URL,
+      roomId: roomInfo.name!,
+      customerName: "Customer",
+    });
+    navigator.clipboard.writeText(url);
+    setCopiedURL(true);
+    setTimeout(() => setCopiedURL(false), 2000);
+  };
 
   return (
     <div
@@ -77,16 +95,28 @@ export default function VideoLayout({
       {/* Contextual section */}
       <div className="h-14 px-3 flex items-center justify-between">
         <LiveIndicator elapsedTime="11:00" isLive={true} />
-        <SharingControls
-          roomName={roomInfo?.name}
-          onShareURL={(url: string) => {
-            navigator.clipboard.writeText(url);
-          }}
-        />
+        <button className={styles.shareContainer} onClick={handleShareURL}>
+          <span className="text-sm text-gray-600">{displayText}</span>
+          <div className={styles.shareIconContainer}>
+            {copiedURL ? (
+              <CheckIcon
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconColor}
+              />
+            ) : (
+              <CopyIcon
+                size={styles.iconSize}
+                weight={styles.iconWeight as IconWeight}
+                color={styles.iconColor}
+              />
+            )}
+          </div>
+        </button>
       </div>
 
+      {/* Main section */}
       <div className="flex flex-1 relative gap-0.5">
-        {/* Main section */}
         <div
           className="relative bg-black rounded-lg overflow-hidden"
           style={{ width: `calc(100% - ${rightPanelWidth}px)` }}
@@ -127,8 +157,8 @@ export default function VideoLayout({
 
         {/* Resize handle */}
         <div
-          className={`w-1 hover:bg-blue-500 cursor-col-resize transition-colors ${
-            isResizing ? "bg-blue-500" : ""
+          className={`w-1 hover:bg-gray-300 cursor-col-resize transition-colors ${
+            isResizing ? "bg-gray-300" : ""
           }`}
           onMouseDown={handleStartResizing}
         />
@@ -200,34 +230,5 @@ function LiveIndicator({
         {isLive ? elapsedTime : "Not Connected"}
       </span>
     </div>
-  );
-}
-
-function SharingControls({
-  roomName,
-  onShareURL,
-}: {
-  roomName?: string;
-  onShareURL: (url: string) => void;
-}) {
-  const handleShare = () => {
-    const url = getSharingURL({
-      publicURL: process.env.NEXT_PUBLIC_BASE_URL!,
-      roomId: roomName!,
-      customerName: "Maria",
-    });
-    onShareURL(url);
-  };
-
-  const displayText = roomName ? `${roomName.slice(0, 8)}...` : "...";
-
-  return (
-    <button
-      className="bg-gray-50 rounded-xl h-8 px-3 flex items-center justify-center hover:bg-gray-100 gap-2 cursor-pointer"
-      onClick={handleShare}
-    >
-      <span className="text-sm text-gray-600">{displayText}</span>
-      <CopyIcon size={16} weight="bold" color="var(--color-gray-600)" />
-    </button>
   );
 }
