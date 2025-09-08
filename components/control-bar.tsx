@@ -6,9 +6,10 @@ import {
   MediaDeviceMenu,
   usePersistentUserChoices,
   useLocalParticipant,
+  useRemoteParticipants
 } from "@livekit/components-react";
 import { Track } from "livekit-client";
-import React from "react";
+import React, { useMemo } from "react";
 import {
   CaretDownIcon,
   MicrophoneSlashIcon,
@@ -18,49 +19,46 @@ import {
   VideoCameraIcon,
   MonitorArrowUpIcon,
   SignOutIcon,
-  PencilSimpleLineIcon,
+  PencilSimpleLineIcon
 } from "@phosphor-icons/react";
 import { styles } from "../styles";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
-  onAnnotationToggle?: (enabled: boolean) => void;
+  onAnnotationToggle?: () => void;
   isAnnotationEnabled?: boolean;
 }
 
 export default function ControlBar({
   onLeave,
   onAnnotationToggle,
-  isAnnotationEnabled = false,
+  isAnnotationEnabled = false
 }: ControlBarProps) {
   const component = styles.controlBar;
   const {
     saveAudioInputEnabled,
     saveVideoInputEnabled,
     saveAudioInputDeviceId,
-    saveVideoInputDeviceId,
+    saveVideoInputDeviceId
   } = usePersistentUserChoices({ preventSave: false });
 
-  const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
   const { isMicrophoneEnabled, isCameraEnabled } = useLocalParticipant();
+  const remoteParticipants = useRemoteParticipants();
+  const screenBeingShared = useMemo(
+    () => remoteParticipants.find((p) => p.isScreenShareEnabled),
+    [remoteParticipants]
+  );
 
   const microphoneOnChange = React.useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
       isUserInitiated ? saveAudioInputEnabled(enabled) : null,
-    [saveAudioInputEnabled],
+    [saveAudioInputEnabled]
   );
 
   const cameraOnChange = React.useCallback(
     (enabled: boolean, isUserInitiated: boolean) =>
       isUserInitiated ? saveVideoInputEnabled(enabled) : null,
-    [saveVideoInputEnabled],
-  );
-
-  const onScreenShareChange = React.useCallback(
-    (enabled: boolean) => {
-      setIsScreenShareEnabled(enabled);
-    },
-    [setIsScreenShareEnabled],
+    [saveVideoInputEnabled]
   );
 
   return (
@@ -148,7 +146,6 @@ export default function ControlBar({
             source={Track.Source.ScreenShare}
             captureOptions={{ audio: true, selfBrowserSurface: "include" }}
             showIcon={false}
-            onChange={onScreenShareChange}
             className={component.iconButton}
           >
             <MonitorArrowUpIcon
@@ -163,7 +160,7 @@ export default function ControlBar({
         {onAnnotationToggle && (
           <div className={component.buttonGroup}>
             <button
-              onClick={() => onAnnotationToggle(!isAnnotationEnabled)}
+              onClick={screenBeingShared ? onAnnotationToggle : undefined}
               className={component.iconButton}
               data-lk-enabled={isAnnotationEnabled}
               type="button"
