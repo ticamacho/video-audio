@@ -5,11 +5,11 @@ import type { Participant } from "livekit-client";
 import { Track } from "livekit-client";
 import type {
   ParticipantClickEvent,
-  TrackReferenceOrPlaceholder,
+  TrackReferenceOrPlaceholder
 } from "@livekit/components-core";
 import {
   isTrackReference,
-  isTrackReferencePinned,
+  isTrackReferencePinned
 } from "@livekit/components-core";
 import {
   ParticipantContext,
@@ -23,15 +23,15 @@ import {
   AudioTrack,
   ParticipantName,
   TrackMutedIndicator,
-  ConnectionQualityIndicator,
+  ConnectionQualityIndicator
 } from "@livekit/components-react";
 import { useParticipantTile } from "@livekit/components-react";
 import { useIsEncrypted } from "@livekit/components-react";
 import {
   MicrophoneSlashIcon,
   MonitorArrowUpIcon,
-  LockClosedIcon,
-  UserIcon,
+  LockIcon,
+  UserIcon
 } from "@phosphor-icons/react";
 import { cn } from "../utils/merge";
 
@@ -41,7 +41,7 @@ import { cn } from "../utils/merge";
 function ParticipantContextIfNeeded(
   props: React.PropsWithChildren<{
     participant?: Participant;
-  }>,
+  }>
 ) {
   const hasContext = !!useMaybeParticipantContext();
   return props.participant && !hasContext ? (
@@ -59,7 +59,7 @@ function ParticipantContextIfNeeded(
 function TrackRefContextIfNeeded(
   props: React.PropsWithChildren<{
     trackRef?: TrackReferenceOrPlaceholder;
-  }>,
+  }>
 ) {
   const hasContext = !!useMaybeTrackRefContext();
   return props.trackRef && !hasContext ? (
@@ -127,7 +127,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       className,
       ...htmlProps
     },
-    ref,
+    ref
   ) {
     const trackReference = useEnsureTrackRef(trackRef);
 
@@ -135,7 +135,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       htmlProps,
       disableSpeakingIndicator,
       onParticipantClick,
-      trackRef: trackReference,
+      trackRef: trackReference
     });
 
     const isEncrypted = useIsEncrypted(trackReference.participant);
@@ -154,7 +154,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
           layoutContext.pin.dispatch({ msg: "clear_pin" });
         }
       },
-      [trackReference, layoutContext],
+      [trackReference, layoutContext]
     );
 
     // Position classes for participant name
@@ -186,7 +186,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
               trackRef={trackReference}
               onSubscriptionStatusChanged={handleSubscribe}
               manageSubscription={autoManageSubscription}
-              className="w-full h-full object-cover"
+              className="h-full w-full object-cover"
             />
           );
         } else {
@@ -212,32 +212,30 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
     const renderMetadata = () => (
       <div
         className={cn(
-          "absolute flex items-center gap-1 px-2 py-1 bg-black/60 rounded text-white text-sm",
-          getPositionClasses(participantNamePosition),
+          "absolute flex items-center gap-1 rounded bg-black/60 px-2 py-1 text-sm text-white",
+          getPositionClasses(participantNamePosition)
         )}
       >
         {trackReference.source === Track.Source.Camera ? (
           <>
-            {isEncrypted && (
-              <LockClosedIcon size={12} className="text-yellow-400" />
-            )}
+            {isEncrypted && <LockIcon size={12} className="text-yellow-400" />}
             {showMutedIndicator && (
               <TrackMutedIndicator
                 trackRef={{
                   participant: trackReference.participant,
-                  source: Track.Source.Microphone,
+                  source: Track.Source.Microphone
                 }}
                 show="muted"
               >
                 <MicrophoneSlashIcon size={12} className="text-red-400" />
               </TrackMutedIndicator>
             )}
-            <ParticipantName className="text-white truncate max-w-20" />
+            <ParticipantName className="max-w-20 truncate text-white" />
           </>
         ) : (
           <>
             <MonitorArrowUpIcon size={12} className="text-blue-400" />
-            <ParticipantName className="text-white truncate max-w-16" />
+            <ParticipantName className="max-w-16 truncate text-white" />
           </>
         )}
         {showConnectionQuality && (
@@ -250,8 +248,8 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       <div
         ref={ref}
         className={cn(
-          "relative w-full h-full overflow-hidden rounded-lg",
-          className,
+          "relative h-full w-full overflow-hidden rounded-lg",
+          className
         )}
         style={{ position: "relative" }}
         {...elementProps}
@@ -269,7 +267,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
         </TrackRefContextIfNeeded>
       </div>
     );
-  },
+  }
 );
 
 export default ParticipantTile;
