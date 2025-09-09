@@ -25,7 +25,7 @@ import { styles as ControlBarStyles } from "../styles";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
-  onAnnotationToggle?: () => void;
+  onAnnotationToggle?: (enabled: boolean) => void;
   isAnnotationEnabled?: boolean;
 }
 
@@ -167,7 +167,11 @@ export default function ControlBar({
         {onAnnotationToggle && (
           <div className={styles.buttonGroup}>
             <button
-              onClick={screenBeingShared ? onAnnotationToggle : undefined}
+              onClick={
+                screenBeingShared
+                  ? () => onAnnotationToggle(!isAnnotationEnabled)
+                  : undefined
+              }
               className={styles.iconButton}
               data-lk-enabled={isAnnotationEnabled}
               type="button"
