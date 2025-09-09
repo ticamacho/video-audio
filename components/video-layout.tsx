@@ -143,7 +143,7 @@ export default function VideoLayout({
               >
                 <VideoTrack
                   ref={videoRef}
-                  className="w-full h-full object-fill"
+                  className="w-full h-full object-contain"
                 />
               </ParticipantTile>
             </TrackLoop>

@@ -16,7 +16,6 @@ import {
   AudioTrack,
   ParticipantName,
 } from "@livekit/components-react";
-import { useParticipantTile } from "@livekit/components-react";
 import { useIsEncrypted } from "@livekit/components-react";
 import {
   MicrophoneSlashIcon,
@@ -37,15 +36,7 @@ export interface ParticipantTileProps
 
 const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
   function ParticipantTile(
-    {
-      trackRef,
-      children,
-      onParticipantClick,
-      disableSpeakingIndicator = false,
-      showMutedIndicator = true,
-      className,
-      ...htmlProps
-    },
+    { trackRef, children, showMutedIndicator = true, className, ...htmlProps },
     ref,
   ) {
     const trackReference = useEnsureTrackRef(trackRef);
