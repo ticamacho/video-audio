@@ -6,16 +6,21 @@ import {
   VideoTrack,
   TrackLoop,
   TrackReferenceOrPlaceholder,
-  ParticipantTile,
   ParticipantName,
   useRoomInfo,
 } from "@livekit/components-react";
 import { useIsMobile } from "../hooks";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
-import { CheckIcon, CopyIcon, IconWeight } from "@phosphor-icons/react";
+import {
+  CheckIcon,
+  CopyIcon,
+  IconWeight,
+  PersonIcon,
+} from "@phosphor-icons/react";
 import { getSharingURL } from "../utils/livekit";
 import { styles as componentStyles } from "../styles";
+import ParticipantTile from "./participant-tile";
 
 interface ResizableVideoLayoutProps {
   baseURL: string;
@@ -132,12 +137,14 @@ export default function VideoLayout({
             </div>
           ) : (
             <TrackLoop tracks={tracks}>
-              <ParticipantTile className="relative w-full h-full">
+              <ParticipantTile
+                className="relative w-full h-full"
+                showMutedIndicator={true}
+              >
                 <VideoTrack
                   ref={videoRef}
                   className="w-full h-full object-contain"
                 />
-                <ParticipantName className="badge absolute bottom-0 left-0" />
               </ParticipantTile>
             </TrackLoop>
           )}
@@ -168,7 +175,7 @@ export default function VideoLayout({
 
         {/* Right panel for video tracks */}
         <div
-          className="bg-gray-900 flex flex-col gap-2 overflow-y-auto rounded-lg p-2"
+          className="flex flex-col gap-2 overflow-y-auto rounded-lg"
           style={isMobile ? {} : { width: `${rightPanelWidth}px` }}
         >
           <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
@@ -195,9 +202,11 @@ function ParticipantVideos({
   return (
     <div className="flex md:flex-col gap-2">
       <TrackLoop tracks={cameraTracks}>
-        <ParticipantTile className="w-full aspect-video flex-1">
+        <ParticipantTile
+          className="w-full aspect-video flex-1"
+          showConnectionQuality={true}
+        >
           <VideoTrack className="w-full h-full object-cover rounded" />
-          <ParticipantName className="badge absolute bottom-0 left-0" />
         </ParticipantTile>
       </TrackLoop>
 

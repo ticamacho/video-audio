@@ -1,29 +1,24 @@
 "use client";
 
 import * as React from "react";
-import type { Participant } from "livekit-client";
 import { Track } from "livekit-client";
 import type {
   ParticipantClickEvent,
-  TrackReferenceOrPlaceholder
+  TrackReferenceOrPlaceholder,
 } from "@livekit/components-core";
 import {
   isTrackReference,
-  isTrackReferencePinned
+  isTrackReferencePinned,
 } from "@livekit/components-core";
 import {
-  ParticipantContext,
-  TrackRefContext,
   useEnsureTrackRef,
   useFeatureContext,
   useMaybeLayoutContext,
-  useMaybeParticipantContext,
-  useMaybeTrackRefContext,
   VideoTrack,
   AudioTrack,
   ParticipantName,
   TrackMutedIndicator,
-  ConnectionQualityIndicator
+  ConnectionQualityIndicator,
 } from "@livekit/components-react";
 import { useParticipantTile } from "@livekit/components-react";
 import { useIsEncrypted } from "@livekit/components-react";
@@ -31,45 +26,9 @@ import {
   MicrophoneSlashIcon,
   MonitorArrowUpIcon,
   LockIcon,
-  UserIcon
+  UserIcon,
 } from "@phosphor-icons/react";
 import { cn } from "../utils/merge";
-
-/**
- * Context provider that only creates ParticipantContext if needed
- */
-function ParticipantContextIfNeeded(
-  props: React.PropsWithChildren<{
-    participant?: Participant;
-  }>
-) {
-  const hasContext = !!useMaybeParticipantContext();
-  return props.participant && !hasContext ? (
-    <ParticipantContext.Provider value={props.participant}>
-      {props.children}
-    </ParticipantContext.Provider>
-  ) : (
-    <>{props.children}</>
-  );
-}
-
-/**
- * Context provider that only creates TrackRefContext if needed
- */
-function TrackRefContextIfNeeded(
-  props: React.PropsWithChildren<{
-    trackRef?: TrackReferenceOrPlaceholder;
-  }>
-) {
-  const hasContext = !!useMaybeTrackRefContext();
-  return props.trackRef && !hasContext ? (
-    <TrackRefContext.Provider value={props.trackRef}>
-      {props.children}
-    </TrackRefContext.Provider>
-  ) : (
-    <>{props.children}</>
-  );
-}
 
 export interface ParticipantTileProps
   extends React.HTMLAttributes<HTMLDivElement> {
@@ -86,33 +45,8 @@ export interface ParticipantTileProps
   showConnectionQuality?: boolean;
   showMutedIndicator?: boolean;
   placeholderIcon?: React.ReactNode;
-  participantNamePosition?:
-    | "bottom-left"
-    | "bottom-right"
-    | "top-left"
-    | "top-right";
 }
 
-/**
- * CustomParticipantTile - A customizable participant tile component
- *
- * Replicates the structure and functionality of LiveKit's ParticipantTile
- * while providing additional customization options for styling and layout.
- *
- * @example Basic usage:
- * ```tsx
- * <CustomParticipantTile trackRef={trackRef} />
- * ```
- *
- * @example With custom styling:
- * ```tsx
- * <CustomParticipantTile
- *   trackRef={trackRef}
- *   showConnectionQuality={false}
- *   participantNamePosition="top-right"
- * />
- * ```
- */
 const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
   function ParticipantTile(
     {
@@ -122,12 +56,10 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       disableSpeakingIndicator = false,
       showConnectionQuality = true,
       showMutedIndicator = true,
-      placeholderIcon,
-      participantNamePosition = "bottom-left",
       className,
       ...htmlProps
     },
-    ref
+    ref,
   ) {
     const trackReference = useEnsureTrackRef(trackRef);
 
@@ -135,7 +67,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       htmlProps,
       disableSpeakingIndicator,
       onParticipantClick,
-      trackRef: trackReference
+      trackRef: trackReference,
     });
 
     const isEncrypted = useIsEncrypted(trackReference.participant);
@@ -154,24 +86,8 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
           layoutContext.pin.dispatch({ msg: "clear_pin" });
         }
       },
-      [trackReference, layoutContext]
+      [trackReference, layoutContext],
     );
-
-    // Position classes for participant name
-    const getPositionClasses = (position: typeof participantNamePosition) => {
-      switch (position) {
-        case "bottom-left":
-          return "bottom-2 left-2";
-        case "bottom-right":
-          return "bottom-2 right-2";
-        case "top-left":
-          return "top-2 left-2";
-        case "top-right":
-          return "top-2 right-2";
-        default:
-          return "bottom-2 left-2";
-      }
-    };
 
     const renderTrackContent = () => {
       if (isTrackReference(trackReference)) {
@@ -201,41 +117,39 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       return null;
     };
 
-    const renderParticipantPlaceholder = () => (
-      <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
-        {placeholderIcon || (
-          <UserIcon size={48} className="text-gray-400" weight="light" />
-        )}
-      </div>
-    );
+    const renderParticipantPlaceholder = () => {
+      // Show placeholder when video is not enabled (muted or no track)
+      const videoEnabled =
+        trackReference.publication && !trackReference.publication.isMuted;
+
+      if (videoEnabled) return null;
+
+      return (
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-50 border border-gray-100">
+          <UserIcon size={44} color={"var(--color-gray-400)"} />
+        </div>
+      );
+    };
 
     const renderMetadata = () => (
       <div
         className={cn(
-          "absolute flex items-center gap-1 rounded bg-black/60 px-2 py-1 text-sm text-white",
-          getPositionClasses(participantNamePosition)
+          "absolute bottom-0 left-0 flex items-center gap-1 rounded bg-black/60 px-2 text-xs text-white",
         )}
       >
         {trackReference.source === Track.Source.Camera ? (
           <>
-            {isEncrypted && <LockIcon size={12} className="text-yellow-400" />}
-            {showMutedIndicator && (
-              <TrackMutedIndicator
-                trackRef={{
-                  participant: trackReference.participant,
-                  source: Track.Source.Microphone
-                }}
-                show="muted"
-              >
-                <MicrophoneSlashIcon size={12} className="text-red-400" />
-              </TrackMutedIndicator>
-            )}
-            <ParticipantName className="max-w-20 truncate text-white" />
+            {isEncrypted && <LockIcon size={12} color={"var(--color-white)"} />}
+            {showMutedIndicator &&
+              !trackReference.participant.isMicrophoneEnabled && (
+                <MicrophoneSlashIcon size={12} color={"var(--color-white)"} />
+              )}
+            <ParticipantName className="max-w-20 truncate" />
           </>
         ) : (
           <>
-            <MonitorArrowUpIcon size={12} className="text-blue-400" />
-            <ParticipantName className="max-w-16 truncate text-white" />
+            <MonitorArrowUpIcon size={12} color={"var(--color-white)"} />
+            <ParticipantName className="max-w-16 truncate" />
           </>
         )}
         {showConnectionQuality && (
@@ -249,25 +163,27 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
         ref={ref}
         className={cn(
           "relative h-full w-full overflow-hidden rounded-lg",
-          className
+          className,
         )}
-        style={{ position: "relative" }}
         {...elementProps}
       >
-        <TrackRefContextIfNeeded trackRef={trackReference}>
-          <ParticipantContextIfNeeded participant={trackReference.participant}>
-            {children ?? (
-              <>
-                {renderTrackContent()}
-                {renderParticipantPlaceholder()}
-                {renderMetadata()}
-              </>
-            )}
-          </ParticipantContextIfNeeded>
-        </TrackRefContextIfNeeded>
+        {children ?? (
+          <>
+            {renderTrackContent()}
+            {renderParticipantPlaceholder()}
+            {renderMetadata()}
+          </>
+        )}
+        {/* Always render placeholder and metadata, even when children are provided */}
+        {children && (
+          <>
+            {renderParticipantPlaceholder()}
+            {renderMetadata()}
+          </>
+        )}
       </div>
     );
-  }
+  },
 );
 
 export default ParticipantTile;
