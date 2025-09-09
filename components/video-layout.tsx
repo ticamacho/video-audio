@@ -124,7 +124,7 @@ export default function VideoLayout({
       </div>
 
       {/* Main section */}
-      <div className="flex flex-col-reverse md:flex-row flex-1 relative gap-0.5">
+      <div className="flex flex-col-reverse md:flex-row grow relative gap-0.5">
         <div
           className="relative bg-black rounded-lg overflow-hidden h-full"
           style={isMobile ? {} : { width: `calc(100% - ${rightPanelWidth}px)` }}
@@ -143,7 +143,7 @@ export default function VideoLayout({
               >
                 <VideoTrack
                   ref={videoRef}
-                  className="w-full h-full object-contain"
+                  className="w-full h-full object-fill"
                 />
               </ParticipantTile>
             </TrackLoop>
@@ -175,7 +175,7 @@ export default function VideoLayout({
 
         {/* Right panel for video tracks */}
         <div
-          className="flex flex-col gap-2 overflow-y-auto rounded-lg"
+          className="flex flex-col gap-2 overflow-auto md:h-full"
           style={isMobile ? {} : { width: `${rightPanelWidth}px` }}
         >
           <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
@@ -200,13 +200,10 @@ function ParticipantVideos({
   );
 
   return (
-    <div className="flex md:flex-col gap-2">
+    <div className="flex md:flex-col gap-2 h-full">
       <TrackLoop tracks={cameraTracks}>
-        <ParticipantTile
-          className="w-full aspect-video flex-1"
-          showConnectionQuality={true}
-        >
-          <VideoTrack className="w-full h-full object-cover rounded" />
+        <ParticipantTile>
+          <VideoTrack className="object-cover" />
         </ParticipantTile>
       </TrackLoop>
 

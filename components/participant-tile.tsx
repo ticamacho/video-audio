@@ -12,13 +12,9 @@ import {
 } from "@livekit/components-core";
 import {
   useEnsureTrackRef,
-  useFeatureContext,
   useMaybeLayoutContext,
-  VideoTrack,
   AudioTrack,
   ParticipantName,
-  TrackMutedIndicator,
-  ConnectionQualityIndicator,
 } from "@livekit/components-react";
 import { useParticipantTile } from "@livekit/components-react";
 import { useIsEncrypted } from "@livekit/components-react";
@@ -32,17 +28,9 @@ import { cn } from "../utils/merge";
 
 export interface ParticipantTileProps
   extends React.HTMLAttributes<HTMLDivElement> {
-  /** The track reference to display */
   trackRef?: TrackReferenceOrPlaceholder;
-
-  /** Disable the speaking indicator */
   disableSpeakingIndicator?: boolean;
-
-  /** Handle participant click events */
   onParticipantClick?: (event: ParticipantClickEvent) => void;
-
-  /** Custom styling options */
-  showConnectionQuality?: boolean;
   showMutedIndicator?: boolean;
   placeholderIcon?: React.ReactNode;
 }
@@ -54,7 +42,6 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       children,
       onParticipantClick,
       disableSpeakingIndicator = false,
-      showConnectionQuality = true,
       showMutedIndicator = true,
       className,
       ...htmlProps
@@ -63,16 +50,11 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
   ) {
     const trackReference = useEnsureTrackRef(trackRef);
 
-    const { elementProps } = useParticipantTile<HTMLDivElement>({
-      htmlProps,
-      disableSpeakingIndicator,
-      onParticipantClick,
-      trackRef: trackReference,
-    });
+    // Skip LiveKit's useParticipantTile to avoid conflicting styles
+    const elementProps = htmlProps;
 
     const isEncrypted = useIsEncrypted(trackReference.participant);
     const layoutContext = useMaybeLayoutContext();
-    const autoManageSubscription = useFeatureContext()?.autoSubscription;
 
     const handleSubscribe = React.useCallback(
       (subscribed: boolean) => {
@@ -90,22 +72,13 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
     );
 
     const renderTrackContent = () => {
+      // Handle AudioTrack internally, VideoTrack comes as children
       if (isTrackReference(trackReference)) {
-        const isVideoTrack =
-          trackReference.publication?.kind === "video" ||
-          trackReference.source === Track.Source.Camera ||
-          trackReference.source === Track.Source.ScreenShare;
+        const isAudioTrack =
+          trackReference.publication?.kind === "audio" ||
+          trackReference.source === Track.Source.Microphone;
 
-        if (isVideoTrack) {
-          return (
-            <VideoTrack
-              trackRef={trackReference}
-              onSubscriptionStatusChanged={handleSubscribe}
-              manageSubscription={autoManageSubscription}
-              className="h-full w-full object-cover"
-            />
-          );
-        } else {
+        if (isAudioTrack) {
           return (
             <AudioTrack
               trackRef={trackReference}
@@ -126,7 +99,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
 
       return (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-50 border border-gray-100">
-          <UserIcon size={44} color={"var(--color-gray-400)"} />
+          <UserIcon size={56} color={"var(--color-gray-200)"} />
         </div>
       );
     };
@@ -134,7 +107,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
     const renderMetadata = () => (
       <div
         className={cn(
-          "absolute bottom-0 left-0 flex items-center gap-1 rounded bg-black/60 px-2 text-xs text-white",
+          "absolute bottom-0 left-0 flex items-center gap-1 rounded-tr-md bg-black/50 h-5 px-2 text-xs text-white",
         )}
       >
         {trackReference.source === Track.Source.Camera ? (
@@ -152,9 +125,6 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
             <ParticipantName className="max-w-16 truncate" />
           </>
         )}
-        {showConnectionQuality && (
-          <ConnectionQualityIndicator className="ml-1" />
-        )}
       </div>
     );
 
@@ -162,25 +132,20 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       <div
         ref={ref}
         className={cn(
-          "relative h-full w-full overflow-hidden rounded-lg",
+          "relative flex-1 w-full overflow-hidden rounded-lg",
           className,
         )}
         {...elementProps}
       >
-        {children ?? (
-          <>
-            {renderTrackContent()}
-            {renderParticipantPlaceholder()}
-            {renderMetadata()}
-          </>
-        )}
-        {/* Always render placeholder and metadata, even when children are provided */}
-        {children && (
-          <>
-            {renderParticipantPlaceholder()}
-            {renderMetadata()}
-          </>
-        )}
+        {/* VideoTrack should be passed as children */}
+        {children}
+
+        {/* Internal audio track handling */}
+        {renderTrackContent()}
+
+        {/* Always render placeholder and metadata */}
+        {renderParticipantPlaceholder()}
+        {renderMetadata()}
       </div>
     );
   },
