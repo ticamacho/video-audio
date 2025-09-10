@@ -89,7 +89,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       if (videoEnabled) return null;
 
       return (
-        <div className="absolute inset-0 flex items-center justify-center bg-gray-50 border border-gray-100">
+        <div className="absolute inset-0 flex items-center justify-center bg-gray-25 border border-gray-50">
           <UserIcon size={56} color={"var(--color-gray-200)"} />
         </div>
       );
@@ -122,10 +122,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
     return (
       <div
         ref={ref}
-        className={cn(
-          "relative flex-1 w-full overflow-hidden rounded-lg",
-          className,
-        )}
+        className={cn("relative overflow-hidden rounded-lg", className)}
         {...elementProps}
       >
         {/* VideoTrack should be passed as children */}

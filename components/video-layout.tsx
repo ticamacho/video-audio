@@ -6,17 +6,15 @@ import {
   VideoTrack,
   TrackLoop,
   TrackReferenceOrPlaceholder,
-  ParticipantName,
   useRoomInfo,
 } from "@livekit/components-react";
-import { useIsMobile } from "../hooks";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
 import {
   CheckIcon,
   CopyIcon,
   IconWeight,
-  PersonIcon,
+  ScreencastIcon,
 } from "@phosphor-icons/react";
 import { getSharingURL } from "../utils/livekit";
 import { styles as componentStyles } from "../styles";
@@ -39,10 +37,6 @@ interface ResizableVideoLayoutProps {
   controlBar: React.ReactNode;
 }
 
-const MIN_RIGHT_PANEL_WIDTH = 160;
-const MAX_RIGHT_PANEL_WIDTH = 640;
-const DEFAULT_RIGHT_PANEL_WIDTH = 320;
-const MOBILE_BREAKPOINT = 768; // Tailwind 'md' breakpoint
 let BASE_URL: string;
 
 export default function VideoLayout({
@@ -61,27 +55,9 @@ export default function VideoLayout({
 }: ResizableVideoLayoutProps) {
   BASE_URL = baseURL;
   const roomInfo = useRoomInfo();
-  const isMobile = useIsMobile(MOBILE_BREAKPOINT);
-  const [rightPanelWidth, setRightPanelWidth] = useState(
-    DEFAULT_RIGHT_PANEL_WIDTH,
-  );
-  const [isResizing, setIsResizing] = useState(false);
   const [copiedURL, setCopiedURL] = useState(false);
   const displayText = roomInfo.name ? `${roomInfo.name.slice(0, 8)}...` : "...";
   const styles = componentStyles.video;
-
-  const handleStartResizing = () => setIsResizing(true);
-  const handleStopResizing = () => setIsResizing(false);
-  const handleResizeMouseMove = (e: React.MouseEvent) => {
-    if (!isResizing) return;
-    const newWidth = window.innerWidth - e.clientX;
-    setRightPanelWidth(
-      Math.max(
-        MIN_RIGHT_PANEL_WIDTH,
-        Math.min(MAX_RIGHT_PANEL_WIDTH, newWidth),
-      ),
-    );
-  };
   const handleShareURL = () => {
     const url = getSharingURL({
       publicURL: BASE_URL,
@@ -96,12 +72,10 @@ export default function VideoLayout({
   return (
     <div
       data-lk-theme="default"
-      className="h-screen w-screen flex flex-col p-2 bg-white min-w-md"
-      onMouseMove={handleResizeMouseMove}
-      onMouseUp={handleStopResizing}
+      className="h-screen w-screen flex flex-col gap-0.5 p-2 bg-[#FBF8FF] overflow-hidden"
     >
-      {/* Contextual section */}
-      <div className="h-14 px-3 flex items-center justify-between">
+      {/* Header */}
+      <div className="h-14 px-3 flex items-center justify-between bg-white">
         <LiveIndicator elapsedTime="11:00" isLive={true} />
         <button className={styles.shareContainer} onClick={handleShareURL}>
           <span className="text-sm text-gray-600">{displayText}</span>
@@ -123,66 +97,59 @@ export default function VideoLayout({
         </button>
       </div>
 
-      {/* Main section */}
-      <div className="flex flex-col-reverse md:flex-row grow relative gap-0.5">
-        <div
-          className="relative bg-black rounded-lg overflow-hidden h-full"
-          style={isMobile ? {} : { width: `calc(100% - ${rightPanelWidth}px)` }}
-        >
-          {!tracks.length ? (
-            <div className="flex items-center w-full h-full justify-center bg-gray-900">
-              <span className="text-primary-content px-16">
-                No screen is being shared. Customer screen will appear here.
-              </span>
-            </div>
-          ) : (
-            <TrackLoop tracks={tracks}>
-              <ParticipantTile
-                className="relative w-full h-full"
-                showMutedIndicator={true}
-              >
-                <VideoTrack
-                  ref={videoRef}
-                  className="w-full h-full object-contain"
-                />
-              </ParticipantTile>
-            </TrackLoop>
-          )}
-
-          {tracks.length && (
-            <canvas
-              ref={canvasRef}
-              className={
-                annotate
-                  ? "absolute inset-0 pointer-events-auto cursor-crosshair"
-                  : "absolute inset-0 pointer-events-none"
-              }
-              onMouseDown={onCanvasMouseDown}
-              onMouseMove={onCanvasMouseMove}
-              onMouseUp={onCanvasMouseUp}
-              onMouseLeave={onCanvasMouseLeave}
-            />
-          )}
-        </div>
-
-        {/* Resize handle */}
-        <div
-          className={`w-1 hover:bg-gray-300 cursor-col-resize transition-colors ${
-            isResizing ? "bg-gray-300" : ""
-          }`}
-          onMouseDown={handleStartResizing}
-        />
-
-        {/* Right panel for video tracks */}
-        <div
-          className="flex flex-col gap-2 overflow-auto md:h-full"
-          style={isMobile ? {} : { width: `${rightPanelWidth}px` }}
-        >
-          <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
-        </div>
+      {/* Participant videos - horizontal row */}
+      <div className="h-40 py-2 bg-white md:px-6 flex items-center justify-center w-full">
+        <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
       </div>
 
-      {/* Bottom control bar */}
+      {/* Main screen share area */}
+      <div className="relative overflow-hidden flex-1 bg-white">
+        {!tracks.length ? (
+          <div className="flex flex-col gap-4 items-center w-full h-full justify-center">
+            <div className="w-36 h-36 rounded-full bg-gray-25 flex items-center justify-center">
+              <ScreencastIcon size={56} color={"var(--color-brand-200)"} />
+            </div>
+            <div className="flex flex-col gap-1 items-center max-w-72">
+              <h2 className="font-semibold text-gray-700">
+                Screen share not started
+              </h2>
+              <p className="text-gray-500">
+                No screen is being shared yet. Once it starts, it will appear
+                here.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <TrackLoop tracks={tracks}>
+            <ParticipantTile
+              className="relative w-full h-full"
+              showMutedIndicator={true}
+            >
+              <VideoTrack
+                ref={videoRef}
+                className="w-full h-full object-contain"
+              />
+            </ParticipantTile>
+          </TrackLoop>
+        )}
+
+        {tracks.length && (
+          <canvas
+            ref={canvasRef}
+            className={
+              annotate
+                ? "absolute inset-0 pointer-events-auto cursor-crosshair"
+                : "absolute inset-0 pointer-events-none"
+            }
+            onMouseDown={onCanvasMouseDown}
+            onMouseMove={onCanvasMouseMove}
+            onMouseUp={onCanvasMouseUp}
+            onMouseLeave={onCanvasMouseLeave}
+          />
+        )}
+      </div>
+
+      {/* Control bar */}
       {controlBar}
     </div>
   );
@@ -200,16 +167,16 @@ function ParticipantVideos({
   );
 
   return (
-    <div className="flex md:flex-col gap-2 h-full">
+    <div className="flex gap-4 overflow-x-auto h-full">
       <TrackLoop tracks={cameraTracks}>
-        <ParticipantTile>
-          <VideoTrack className="object-cover" />
+        <ParticipantTile className="aspect-video flex-shrink-0">
+          <VideoTrack className="object-cover w-full h-full" />
         </ParticipantTile>
       </TrackLoop>
 
       {cameraTracks.length === 0 && (
-        <div className="text-gray-50 text-sm text-center py-8">
-          No video feeds available
+        <div className="flex items-center justify-center w-full text-gray-500 text-sm">
+          No participants with cameras
         </div>
       )}
     </div>

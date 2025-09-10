@@ -1,12 +1,12 @@
 export const controlBarStyles = {
   // Container for the entire control bar
-  controlBar: "flex items-center justify-center gap-12 h-20",
+  controlBar: "flex items-center justify-center gap-12 h-20 bg-white",
 
   // control groupings
   controlGroup: "flex items-center gap-2",
 
   // Base button group styling
-  buttonGroup: "border-2 rounded-2xl border-gray-100 flex overflow-hidden",
+  buttonGroup: "border rounded-2xl border-gray-100 flex overflow-hidden",
 
   // Base button styling - clean without overrides needed
   button:
@@ -21,9 +21,9 @@ export const controlBarStyles = {
     "bg-gray-50! gap-0! text-gray-700 border-none px-4 hover:bg-gray-100! hover:cursor-pointer data-[lk-enabled=true]:bg-gray-100! h-11",
 
   // Leave button
-  leaveGroup: "border-2 rounded-2xl border-plum-200 flex overflow-hidden",
+  leaveGroup: "border rounded-2xl border-plum-200 flex overflow-hidden",
   leaveButton:
-    "bg-plum-50! gap-0! border-none! px-4 text-plum-700 hover:bg-plum-200! disabled:opacity-100!",
+    "bg-plum-50! gap-0! border-none! px-4 text-plum-700 hover:bg-plum-200! disabled:opacity-100! transition duration-200",
 
   iconDefaultColor: "var(--color-gray-500)",
   iconDangerColor: "var(--color-plum-700)",
