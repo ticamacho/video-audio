@@ -32,7 +32,6 @@ interface ResizableVideoLayoutProps {
   onCanvasMouseMove?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onCanvasMouseUp?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onCanvasMouseLeave?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
-  onClearAnnotations?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   cameraTrackOptions?: object;
   controlBar: React.ReactNode;
 }
@@ -49,7 +48,6 @@ export default function VideoLayout({
   onCanvasMouseMove,
   onCanvasMouseUp,
   onCanvasMouseLeave,
-  onClearAnnotations,
   cameraTrackOptions = {},
   controlBar,
 }: ResizableVideoLayoutProps) {
