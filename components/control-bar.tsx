@@ -20,18 +20,21 @@ import {
   MonitorArrowUpIcon,
   SignOutIcon,
   PencilSimpleLineIcon,
+  TrashIcon,
 } from "@phosphor-icons/react";
 import { styles as ControlBarStyles } from "../styles";
 
 interface ControlBarProps {
   onLeave?: () => Promise<void>;
   onAnnotationToggle?: (enabled: boolean) => void;
+  onAnnotationsClear?: () => void;
   isAnnotationEnabled?: boolean;
 }
 
 export default function ControlBar({
   onLeave,
   onAnnotationToggle,
+  onAnnotationsClear,
   isAnnotationEnabled = false,
 }: ControlBarProps) {
   const styles = ControlBarStyles.controlBar;
@@ -160,10 +163,10 @@ export default function ControlBar({
               color={styles.iconDefaultColor}
               className={styles.iconInteractivity}
             />
-            {/* {isScreenShareEnabled ? "Stop screen share" : "Share screen"} */}
           </TrackToggle>
         </div>
 
+        {/* Annotation control and state to enable clearing */}
         {onAnnotationToggle && (
           <div className={styles.buttonGroup}>
             <button
@@ -183,6 +186,20 @@ export default function ControlBar({
                 className={styles.iconInteractivity}
               />
             </button>
+            {isAnnotationEnabled && (
+              <button
+                className={styles.menuButton}
+                onClick={onAnnotationsClear}
+                type="button"
+              >
+                <TrashIcon
+                  size={styles.iconSize}
+                  weight={styles.iconWeight as IconWeight}
+                  color={styles.iconDefaultColor}
+                  className={styles.iconInteractivity}
+                />
+              </button>
+            )}
           </div>
         )}
       </div>
