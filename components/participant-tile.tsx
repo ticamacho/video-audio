@@ -90,7 +90,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
 
       return (
         <div className="absolute inset-0 flex items-center justify-center bg-gray-25 border border-gray-50">
-          <UserIcon size={56} color={"var(--color-gray-200)"} />
+          <UserIcon size={48} color={"var(--color-brand-200)"} />
         </div>
       );
     };

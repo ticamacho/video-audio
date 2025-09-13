@@ -72,10 +72,10 @@ export default function VideoLayout({
   return (
     <div
       data-lk-theme="default"
-      className="h-screen w-screen flex flex-col gap-0.5 overflow-hidden"
+      className="h-screen w-screen flex flex-col gap-0.5 overflow-hidden bg-gray-25"
     >
       {/* Header */}
-      <div className="h-14 px-3 flex items-center justify-between bg-white">
+      <div className="h-14 px-6 flex items-center justify-between bg-white">
         <LiveIndicator elapsedTime="11:00" isLive={true} />
         <button className={styles.shareContainer} onClick={handleShareURL}>
           <span className="text-sm text-gray-600">{displayText}</span>
@@ -98,18 +98,18 @@ export default function VideoLayout({
       </div>
 
       {/* Participant videos - horizontal row */}
-      <div className="h-40 py-2 bg-white md:px-6 flex items-center justify-center w-full">
+      <div className="h-40 py-4 bg-white md:px-6 flex items-center justify-center w-full">
         <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
       </div>
 
       {/* Main screen share area */}
       <div className="relative overflow-hidden flex-1 bg-white">
         {!tracks.length ? (
-          <div className="flex flex-col gap-4 items-center w-full h-full justify-center">
+          <div className="flex flex-col gap-6 items-center w-full h-full justify-center">
             <div className="w-36 h-36 rounded-full bg-gray-25 flex items-center justify-center">
               <ScreencastIcon size={56} color={"var(--color-brand-200)"} />
             </div>
-            <div className="flex flex-col gap-1 items-center max-w-72">
+            <div className="flex flex-col gap-2 items-center text-center max-w-72">
               <h2 className="font-semibold text-gray-700">
                 Screen share not started
               </h2>
