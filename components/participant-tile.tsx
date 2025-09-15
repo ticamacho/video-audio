@@ -67,24 +67,9 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       (trackReference.publication?.kind === "audio" ||
         trackReference.source === Track.Source.Microphone);
 
-    const renderTrackContent = () => {
-      // Handle AudioTrack internally, VideoTrack comes as children
-      if (isAudioTrack) {
-        return (
-          <AudioTrack
-            trackRef={trackReference}
-            onSubscriptionStatusChanged={handleSubscribe}
-          />
-        );
-      }
-      return null;
-    };
-
     const renderParticipantPlaceholder = () => {
-      // Show placeholder when video is not enabled (muted or no track)
       const videoEnabled =
         trackReference.publication && !trackReference.publication.isMuted;
-
       if (videoEnabled) return null;
 
       return (
@@ -120,7 +105,12 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
 
     // For audio tracks, render only the audio component without visual elements
     if (isAudioTrack) {
-      return renderTrackContent();
+      return (
+        <AudioTrack
+          trackRef={trackReference}
+          onSubscriptionStatusChanged={handleSubscribe}
+        />
+      );
     }
 
     return (
@@ -129,13 +119,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
         className={cn("relative overflow-hidden rounded-lg", className)}
         {...elementProps}
       >
-        {/* VideoTrack should be passed as children */}
         {children}
-
-        {/* Internal audio track handling */}
-        {renderTrackContent()}
-
-        {/* Only render visual elements for video tracks */}
         {renderParticipantPlaceholder()}
         {renderMetadata()}
       </div>
