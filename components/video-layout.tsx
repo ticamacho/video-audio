@@ -7,6 +7,7 @@ import {
   TrackLoop,
   TrackReferenceOrPlaceholder,
   useRoomInfo,
+  TrackRefContext,
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
@@ -173,9 +174,9 @@ function ParticipantVideos({
     <>
       {/* Render audio tracks for playback */}
       <TrackLoop tracks={audioTracks}>
-        <ParticipantTile className="hidden">
-          {/* Audio only - no visual component needed */}
-        </ParticipantTile>
+        <TrackRefContext.Consumer>
+          {(track) => track && <ParticipantTile trackRef={track} />}
+        </TrackRefContext.Consumer>
       </TrackLoop>
 
       <div className="flex gap-4 overflow-x-auto h-full">
