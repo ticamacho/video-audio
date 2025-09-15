@@ -7,7 +7,6 @@ import {
   TrackLoop,
   TrackReferenceOrPlaceholder,
   useRoomInfo,
-  TrackRefContext,
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import { cn } from "../utils/merge";
@@ -160,39 +159,22 @@ function ParticipantVideos({
 }: {
   cameraTrackOptions?: object;
 }) {
-  const cameraTracks = useTracks(
-    [{ source: Track.Source.Camera, withPlaceholder: true }],
+  const participantTracks = useTracks(
+    [
+      { source: Track.Source.Camera, withPlaceholder: true },
+      { source: Track.Source.Microphone, withPlaceholder: false },
+    ],
     cameraTrackOptions,
   );
 
-  // Subscribe to all audio tracks to ensure audio playback
-  const audioTracks = useTracks([
-    { source: Track.Source.Microphone, withPlaceholder: false },
-  ]);
-
   return (
-    <>
-      {/* Render audio tracks for playback */}
-      <TrackLoop tracks={audioTracks}>
-        <TrackRefContext.Consumer>
-          {(track) => track && <ParticipantTile trackRef={track} />}
-        </TrackRefContext.Consumer>
+    <div className="flex gap-4 overflow-x-auto h-full">
+      <TrackLoop tracks={participantTracks}>
+        <ParticipantTile className="aspect-video flex-shrink-0">
+          <VideoTrack className="object-cover w-full h-full" />
+        </ParticipantTile>
       </TrackLoop>
-
-      <div className="flex gap-4 overflow-x-auto h-full">
-        <TrackLoop tracks={cameraTracks}>
-          <ParticipantTile className="aspect-video flex-shrink-0">
-            <VideoTrack className="object-cover w-full h-full" />
-          </ParticipantTile>
-        </TrackLoop>
-
-        {cameraTracks.length === 0 && (
-          <div className="flex items-center justify-center w-full text-gray-500 text-sm">
-            No participants with cameras
-          </div>
-        )}
-      </div>
-    </>
+    </div>
   );
 }
 

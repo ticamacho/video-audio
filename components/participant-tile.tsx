@@ -62,21 +62,20 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       [trackReference, layoutContext],
     );
 
+    const isAudioTrack =
+      isTrackReference(trackReference) &&
+      (trackReference.publication?.kind === "audio" ||
+        trackReference.source === Track.Source.Microphone);
+
     const renderTrackContent = () => {
       // Handle AudioTrack internally, VideoTrack comes as children
-      if (isTrackReference(trackReference)) {
-        const isAudioTrack =
-          trackReference.publication?.kind === "audio" ||
-          trackReference.source === Track.Source.Microphone;
-
-        if (isAudioTrack) {
-          return (
-            <AudioTrack
-              trackRef={trackReference}
-              onSubscriptionStatusChanged={handleSubscribe}
-            />
-          );
-        }
+      if (isAudioTrack) {
+        return (
+          <AudioTrack
+            trackRef={trackReference}
+            onSubscriptionStatusChanged={handleSubscribe}
+          />
+        );
       }
       return null;
     };
@@ -119,6 +118,11 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
       </div>
     );
 
+    // For audio tracks, render only the audio component without visual elements
+    if (isAudioTrack) {
+      return renderTrackContent();
+    }
+
     return (
       <div
         ref={ref}
@@ -131,7 +135,7 @@ const ParticipantTile = React.forwardRef<HTMLDivElement, ParticipantTileProps>(
         {/* Internal audio track handling */}
         {renderTrackContent()}
 
-        {/* Always render placeholder and metadata */}
+        {/* Only render visual elements for video tracks */}
         {renderParticipantPlaceholder()}
         {renderMetadata()}
       </div>
