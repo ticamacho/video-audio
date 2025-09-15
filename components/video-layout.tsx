@@ -164,20 +164,34 @@ function ParticipantVideos({
     cameraTrackOptions,
   );
 
+  // Subscribe to all audio tracks to ensure audio playback
+  const audioTracks = useTracks([
+    { source: Track.Source.Microphone, withPlaceholder: false },
+  ]);
+
   return (
-    <div className="flex gap-4 overflow-x-auto h-full">
-      <TrackLoop tracks={cameraTracks}>
-        <ParticipantTile className="aspect-video flex-shrink-0">
-          <VideoTrack className="object-cover w-full h-full" />
+    <>
+      {/* Render audio tracks for playback */}
+      <TrackLoop tracks={audioTracks}>
+        <ParticipantTile className="hidden">
+          {/* Audio only - no visual component needed */}
         </ParticipantTile>
       </TrackLoop>
 
-      {cameraTracks.length === 0 && (
-        <div className="flex items-center justify-center w-full text-gray-500 text-sm">
-          No participants with cameras
-        </div>
-      )}
-    </div>
+      <div className="flex gap-4 overflow-x-auto h-full">
+        <TrackLoop tracks={cameraTracks}>
+          <ParticipantTile className="aspect-video flex-shrink-0">
+            <VideoTrack className="object-cover w-full h-full" />
+          </ParticipantTile>
+        </TrackLoop>
+
+        {cameraTracks.length === 0 && (
+          <div className="flex items-center justify-center w-full text-gray-500 text-sm">
+            No participants with cameras
+          </div>
+        )}
+      </div>
+    </>
   );
 }
 
