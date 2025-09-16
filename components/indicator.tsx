@@ -7,7 +7,7 @@ type IndicatorProps = {
 
 const Indicator = ({ isActive, elapsedTime }: IndicatorProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 text-sm text-gray-700">
       <div
         className={cn(
           "flex h-4 w-4 items-center justify-center rounded-full",
@@ -21,17 +21,15 @@ const Indicator = ({ isActive, elapsedTime }: IndicatorProps) => {
           )}
         />
       </div>
-      <div className="flex gap-1">
-        <span className="text-sm">
-          {isActive ? "Connected" : "Not Connected"}
-        </span>
-        {isActive && (
-          <>
-            <span>·</span>
-            <span>{elapsedTime}</span>
-          </>
-        )}
-      </div>
+      {isActive ? (
+        <div className="flex gap-1">
+          <span>Connected</span>
+          <span>·</span>
+          <span>{elapsedTime}</span>
+        </div>
+      ) : (
+        <span>Not connected</span>
+      )}
     </div>
   );
 };
