@@ -11,13 +11,13 @@ const Indicator = ({ isActive, elapsedTime }: IndicatorProps) => {
       <div
         className={cn(
           "flex h-4 w-4 items-center justify-center rounded-full",
-          isActive ? "bg-brand-200" : "bg-plum-100"
+          isActive ? "bg-brand-200" : "bg-plum-100",
         )}
       >
         <div
           className={cn(
             "h-1.5 w-1.5 rounded-full",
-            isActive ? "bg-brand-500" : "bg-plum-400"
+            isActive ? "bg-brand-500" : "bg-plum-400",
           )}
         />
       </div>
