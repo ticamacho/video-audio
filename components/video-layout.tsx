@@ -1,21 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   useTracks,
   VideoTrack,
   TrackLoop,
   TrackReferenceOrPlaceholder,
-  useRoomInfo
+  useRoomInfo,
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
 import {
   CheckIcon,
   CopyIcon,
   IconWeight,
-  ScreencastIcon
+  ScreencastIcon,
 } from "@phosphor-icons/react";
 import { getSharingURL } from "../utils/livekit";
+import { calculateElapsedTime } from "../utils/time";
 import { styles as componentStyles } from "../styles";
 import ParticipantTile from "./participant-tile";
 import Indicator from "./indicator";
@@ -29,6 +30,7 @@ interface ResizableVideoLayoutProps {
   headerActions?: React.ReactNode;
   annotate?: boolean;
   connected?: boolean;
+  sessionStartTime?: string | Date;
   onCanvasMouseDown?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onCanvasMouseMove?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onCanvasMouseUp?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
@@ -46,23 +48,37 @@ export default function VideoLayout({
   canvasRef,
   annotate = false,
   connected = false,
+  sessionStartTime,
   onCanvasMouseDown,
   onCanvasMouseMove,
   onCanvasMouseUp,
   onCanvasMouseLeave,
   cameraTrackOptions = {},
-  controlBar
+  controlBar,
 }: ResizableVideoLayoutProps) {
   BASE_URL = baseURL;
   const roomInfo = useRoomInfo();
   const [copiedURL, setCopiedURL] = useState(false);
+  const [elapsedTime, setElapsedTime] = useState("--:--:--");
   const displayText = roomInfo.name ? `${roomInfo.name.slice(0, 8)}...` : "...";
   const styles = componentStyles.video;
+
+  useEffect(() => {
+    if (!sessionStartTime) return;
+    const updateElapsedTime = () => {
+      const elapsed = calculateElapsedTime(sessionStartTime);
+      setElapsedTime(elapsed);
+    };
+    updateElapsedTime();
+    const interval = setInterval(updateElapsedTime, 1000);
+
+    return () => clearInterval(interval);
+  }, [sessionStartTime]);
   const handleShareURL = () => {
     const url = getSharingURL({
       publicURL: BASE_URL,
       roomId: roomInfo.name!,
-      customerName: "Customer"
+      customerName: "Customer",
     });
     navigator.clipboard.writeText(url);
     setCopiedURL(true);
@@ -76,7 +92,7 @@ export default function VideoLayout({
     >
       {/* Header */}
       <div className="flex h-14 items-center justify-between bg-white px-6">
-        <Indicator isActive={connected} elapsedTime="00:00:00" />
+        <Indicator isActive={connected} elapsedTime={elapsedTime} />
         <button className={styles.shareContainer} onClick={handleShareURL}>
           <span className="text-sm text-gray-600">{displayText}</span>
           <div className={styles.shareIconContainer}>
@@ -157,16 +173,16 @@ export default function VideoLayout({
 
 // Participant camera feeds component
 function ParticipantVideos({
-  cameraTrackOptions = {}
+  cameraTrackOptions = {},
 }: {
   cameraTrackOptions?: object;
 }) {
   const participantTracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
-      { source: Track.Source.Microphone, withPlaceholder: false }
+      { source: Track.Source.Microphone, withPlaceholder: false },
     ],
-    cameraTrackOptions
+    cameraTrackOptions,
   );
 
   return (

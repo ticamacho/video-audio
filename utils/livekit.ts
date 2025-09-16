@@ -13,9 +13,9 @@ export async function fetchToken({
   if (!response.ok) {
     throw new Error("Failed to fetch token");
   }
-  const { token } = await response.json();
+  const { token, session } = await response.json();
 
-  return token;
+  return { token, session };
 }
 
 export async function leaveRoom({
