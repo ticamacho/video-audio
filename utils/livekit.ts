@@ -36,6 +36,22 @@ export async function leaveRoom({
   });
 }
 
+export async function createRoom({
+  apiURL,
+  roomId,
+}: {
+  apiURL: string;
+  roomId: string;
+}) {
+  const response = await fetch(`${apiURL}/room/${roomId}`);
+  if (!response.ok) {
+    throw new Error("Failed to create room");
+  }
+  const { token, session } = await response.json();
+
+  return { token, session };
+}
+
 export function getSharingURL({
   publicURL,
   roomId,
