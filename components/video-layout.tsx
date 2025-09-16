@@ -6,19 +6,19 @@ import {
   VideoTrack,
   TrackLoop,
   TrackReferenceOrPlaceholder,
-  useRoomInfo,
+  useRoomInfo
 } from "@livekit/components-react";
 import { LocalParticipant, RemoteParticipant, Track } from "livekit-client";
-import { cn } from "../utils/merge";
 import {
   CheckIcon,
   CopyIcon,
   IconWeight,
-  ScreencastIcon,
+  ScreencastIcon
 } from "@phosphor-icons/react";
 import { getSharingURL } from "../utils/livekit";
 import { styles as componentStyles } from "../styles";
 import ParticipantTile from "./participant-tile";
+import Indicator from "./indicator";
 
 interface ResizableVideoLayoutProps {
   baseURL: string;
@@ -28,6 +28,7 @@ interface ResizableVideoLayoutProps {
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
   headerActions?: React.ReactNode;
   annotate?: boolean;
+  connected?: boolean;
   onCanvasMouseDown?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onCanvasMouseMove?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
   onCanvasMouseUp?: (e: React.MouseEvent<HTMLCanvasElement>) => void;
@@ -44,12 +45,13 @@ export default function VideoLayout({
   videoRef,
   canvasRef,
   annotate = false,
+  connected = false,
   onCanvasMouseDown,
   onCanvasMouseMove,
   onCanvasMouseUp,
   onCanvasMouseLeave,
   cameraTrackOptions = {},
-  controlBar,
+  controlBar
 }: ResizableVideoLayoutProps) {
   BASE_URL = baseURL;
   const roomInfo = useRoomInfo();
@@ -60,7 +62,7 @@ export default function VideoLayout({
     const url = getSharingURL({
       publicURL: BASE_URL,
       roomId: roomInfo.name!,
-      customerName: "Customer",
+      customerName: "Customer"
     });
     navigator.clipboard.writeText(url);
     setCopiedURL(true);
@@ -70,11 +72,11 @@ export default function VideoLayout({
   return (
     <div
       data-lk-theme="default"
-      className="h-screen w-screen flex flex-col gap-0.5 overflow-hidden bg-gray-25"
+      className="bg-gray-25 flex h-screen w-screen flex-col gap-0.5 overflow-hidden"
     >
       {/* Header */}
-      <div className="h-14 px-6 flex items-center justify-between bg-white">
-        <LiveIndicator elapsedTime="11:00" isLive={true} />
+      <div className="flex h-14 items-center justify-between bg-white px-6">
+        <Indicator isActive={connected} elapsedTime="00:00:00" />
         <button className={styles.shareContainer} onClick={handleShareURL}>
           <span className="text-sm text-gray-600">{displayText}</span>
           <div className={styles.shareIconContainer}>
@@ -96,18 +98,18 @@ export default function VideoLayout({
       </div>
 
       {/* Participant videos - horizontal row */}
-      <div className="h-40 py-4 bg-white md:px-6 flex items-center justify-center w-full">
+      <div className="flex h-40 w-full items-center justify-center bg-white py-4 md:px-6">
         <ParticipantVideos cameraTrackOptions={cameraTrackOptions} />
       </div>
 
       {/* Main screen share area */}
-      <div className="relative overflow-hidden flex-1 bg-white">
+      <div className="relative flex-1 overflow-hidden bg-white">
         {!tracks.length ? (
-          <div className="flex flex-col gap-6 items-center w-full h-full justify-center">
-            <div className="w-36 h-36 rounded-full bg-gray-25 flex items-center justify-center">
+          <div className="flex h-full w-full flex-col items-center justify-center gap-6">
+            <div className="bg-gray-25 flex h-36 w-36 items-center justify-center rounded-full">
               <ScreencastIcon size={56} color={"var(--color-brand-200)"} />
             </div>
-            <div className="flex flex-col gap-2 items-center text-center max-w-72">
+            <div className="flex max-w-72 flex-col items-center gap-2 text-center">
               <h2 className="font-semibold text-gray-700">
                 Screen share not started
               </h2>
@@ -120,12 +122,12 @@ export default function VideoLayout({
         ) : (
           <TrackLoop tracks={tracks}>
             <ParticipantTile
-              className="relative w-full h-full"
+              className="relative h-full w-full"
               showMutedIndicator={true}
             >
               <VideoTrack
                 ref={videoRef}
-                className="w-full h-full object-contain"
+                className="h-full w-full object-contain"
               />
             </ParticipantTile>
           </TrackLoop>
@@ -136,8 +138,8 @@ export default function VideoLayout({
             ref={canvasRef}
             className={
               annotate
-                ? "absolute inset-0 pointer-events-auto cursor-crosshair"
-                : "absolute inset-0 pointer-events-none"
+                ? "pointer-events-auto absolute inset-0 cursor-crosshair"
+                : "pointer-events-none absolute inset-0"
             }
             onMouseDown={onCanvasMouseDown}
             onMouseMove={onCanvasMouseMove}
@@ -155,54 +157,25 @@ export default function VideoLayout({
 
 // Participant camera feeds component
 function ParticipantVideos({
-  cameraTrackOptions = {},
+  cameraTrackOptions = {}
 }: {
   cameraTrackOptions?: object;
 }) {
   const participantTracks = useTracks(
     [
       { source: Track.Source.Camera, withPlaceholder: true },
-      { source: Track.Source.Microphone, withPlaceholder: false },
+      { source: Track.Source.Microphone, withPlaceholder: false }
     ],
-    cameraTrackOptions,
+    cameraTrackOptions
   );
 
   return (
-    <div className="flex gap-4 overflow-x-auto h-full">
+    <div className="flex h-full gap-4 overflow-x-auto">
       <TrackLoop tracks={participantTracks}>
         <ParticipantTile className="aspect-video flex-shrink-0">
-          <VideoTrack className="object-cover w-full h-full" />
+          <VideoTrack className="h-full w-full object-cover" />
         </ParticipantTile>
       </TrackLoop>
-    </div>
-  );
-}
-
-function LiveIndicator({
-  isLive,
-  elapsedTime = "--:--:--",
-}: {
-  isLive: boolean;
-  elapsedTime: string;
-}) {
-  return (
-    <div className="flex items-center gap-2">
-      <div
-        className={cn(
-          "w-4 h-4 rounded-full flex items-center justify-center",
-          isLive ? "bg-brand-300" : "bg-red-200",
-        )}
-      >
-        <div
-          className={cn(
-            "w-1.5 h-1.5 rounded-full",
-            isLive ? "bg-brand-700" : "bg-red-700",
-          )}
-        />
-      </div>
-      <span className="text-sm text-gray-600">
-        {isLive ? elapsedTime : "Not Connected"}
-      </span>
     </div>
   );
 }
