@@ -88,7 +88,7 @@ export default function VideoLayout({
   return (
     <div
       data-lk-theme="default"
-      className="bg-gray-25 flex h-screen w-screen flex-col gap-0.5 overflow-hidden"
+      className="bg-gray-50 flex h-screen w-screen flex-col gap-0.5 overflow-hidden"
     >
       {/* Header */}
       <div className="flex h-14 items-center justify-between bg-white px-6">
