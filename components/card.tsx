@@ -26,7 +26,7 @@ function Actions({ children, className }: CardProps) {
   return (
     <div
       className={cn(
-        "flex items-center justify-end gap-2 px-6 pt-8 pb-6",
+        "flex items-center justify-end gap-2 px-6 pt-7 pb-6",
         className,
       )}
     >
