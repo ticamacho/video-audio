@@ -2,41 +2,43 @@ import { ReactNode } from "react";
 
 type ButtonVariant = "primary" | "link";
 
-type ButtonProps = {
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: ButtonVariant;
-  onClick?: () => void;
-  disabled?: boolean;
   loading?: boolean;
   type?: "button" | "submit" | "reset";
-};
+}
 
-export const Button = ({
+const Button = ({
   children,
   variant = "primary",
-  onClick,
-  disabled = false,
   loading = false,
   type = "button",
+  ...props
 }: ButtonProps) => {
   const baseClasses =
-    "btn rounded-3xl font-bold px-4 min-w-20 py-3 text-sm border-0";
+    "btn rounded-3xl font-bold px-4 min-w-20 text-sm h-10 inline-flex items-center justify-center cursor-pointer relative";
 
   const variantClasses = {
-    primary: "bg-primary hover:bg-brand-800 text-white",
+    primary: "bg-brand-700 hover:bg-brand-800 text-white",
     link: "btn-ghost px-2",
   };
-
-  const isDisabled = disabled || loading;
 
   return (
     <button
       type={type}
-      onClick={isDisabled ? undefined : onClick}
-      disabled={isDisabled}
-      className={`${baseClasses} ${variantClasses[variant]} disabled:opacity-50 disabled:cursor-not-allowed`}
+      disabled={loading}
+      className={`${baseClasses} ${variantClasses[variant]} disabled:cursor-not-allowed`}
+      {...props}
     >
-      {loading ? "Loading..." : children}
+      {loading && (
+        <div className="absolute inset-0 flex items-center justify-center">
+          <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent"></div>
+        </div>
+      )}
+      <span className={loading ? "invisible" : ""}>{children}</span>
     </button>
   );
 };
+
+export default Button;
