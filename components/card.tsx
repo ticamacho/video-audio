@@ -9,7 +9,7 @@ function Root({ children, className }: CardProps) {
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-2xl bg-white shadow-[1px_2px_8px_0_rgba(0,0,0,0.07)]",
+        "overflow-hidden rounded-2xl bg-white border border-gray-100",
         className,
       )}
     >
@@ -19,7 +19,7 @@ function Root({ children, className }: CardProps) {
 }
 
 function Content({ children, className }: CardProps) {
-  return <div className={cn("bg-white px-6 pt-6", className)}>{children}</div>;
+  return <div className={cn("px-6 pt-6", className)}>{children}</div>;
 }
 
 function Actions({ children, className }: CardProps) {
