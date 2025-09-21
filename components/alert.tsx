@@ -1,4 +1,8 @@
-import { InfoIcon, WarningIcon, XCircleIcon } from "@phosphor-icons/react";
+import {
+  InfoIcon,
+  ShieldWarningIcon,
+  WarningIcon,
+} from "@phosphor-icons/react";
 import { cn } from "../utils";
 
 type AlertVariant = "error" | "warning" | "info";
@@ -11,17 +15,17 @@ type AlertProps = {
 const alertConfig = {
   error: {
     icon: WarningIcon,
-    className: "bg-red-50 text-gray-700",
+    className: "bg-red-50",
     iconClassName: "text-red-500",
   },
   warning: {
-    icon: WarningIcon,
-    className: "bg-yellow-50 border-yellow-200 text-yellow-800",
+    icon: ShieldWarningIcon,
+    className: "bg-yellow-50",
     iconClassName: "text-yellow-500",
   },
   info: {
     icon: InfoIcon,
-    className: "bg-blue-50 border-blue-200 text-blue-800",
+    className: "bg-blue-50",
     iconClassName: "text-blue-500",
   },
 } as const;
@@ -34,18 +38,18 @@ export const Alert = ({ children, variant = "error" }: AlertProps) => {
     <div
       role="alert"
       className={cn(
-        "w-full flex items-start gap-3 p-6 rounded-2xl",
+        "flex w-full items-start gap-3 rounded-2xl p-6",
         config.className,
       )}
     >
-      <div className="h-6 w-6 flex items-center justify-center">
+      <div className="flex h-6 w-6 items-center justify-center">
         <IconComponent
-          weight="duotone"
+          weight="bold"
           size={20}
           className={`flex-shrink-0 ${config.iconClassName}`}
         />
       </div>
-      <span className="font-semibold">{children}</span>
+      <p className="text-base">{children}</p>
     </div>
   );
 };
