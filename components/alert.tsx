@@ -16,17 +16,17 @@ const alertConfig = {
   error: {
     icon: WarningIcon,
     className: "bg-red-50",
-    iconClassName: "text-red-500",
+    iconClassName: "text-red-600",
   },
   warning: {
     icon: ShieldWarningIcon,
     className: "bg-yellow-50",
-    iconClassName: "text-yellow-500",
+    iconClassName: "text-yellow-700",
   },
   info: {
     icon: InfoIcon,
     className: "bg-blue-50",
-    iconClassName: "text-blue-500",
+    iconClassName: "text-blue-700",
   },
 } as const;
 
