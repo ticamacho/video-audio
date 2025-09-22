@@ -9,7 +9,7 @@ function Root({ children, className }: CardProps) {
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-2xl bg-white border border-gray-100",
+        "overflow-hidden rounded-2xl border border-gray-100 bg-white",
         className,
       )}
     >
@@ -25,10 +25,7 @@ function Content({ children, className }: CardProps) {
 function Actions({ children, className }: CardProps) {
   return (
     <div
-      className={cn(
-        "flex items-center justify-end gap-2 px-6 pt-7 pb-6",
-        className,
-      )}
+      className={cn("flex items-center justify-end gap-2 px-6 py-6", className)}
     >
       {children}
     </div>
