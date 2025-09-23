@@ -58,8 +58,9 @@ export function getSharingURL({
   customerName,
 }: {
   publicURL: string;
-  roomId: string;
+  roomId: string | undefined;
   customerName: string;
 }) {
+  if (!roomId) return "";
   return `${publicURL}/share_session?id=${encodeURIComponent(roomId)}&name=${encodeURIComponent(customerName)}`;
 }

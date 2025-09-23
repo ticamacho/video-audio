@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 
-type ButtonVariant = "primary" | "link";
+type ButtonVariant = "primary" | "soft" | "link";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -21,6 +21,7 @@ const Button = ({
 
   const variantClasses = {
     primary: "bg-brand-700 hover:bg-brand-800 text-white",
+    soft: "bg-brand-50 hover:bg-brand-100 text-brand-700",
     link: "btn-ghost px-2",
   };
 
