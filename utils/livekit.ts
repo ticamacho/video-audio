@@ -18,6 +18,31 @@ export async function fetchToken({
   return { token, session };
 }
 
+export async function initSession(apiURL: string) {
+  const response = await fetch(`${apiURL}/room`, {
+    method: "POST",
+  });
+  if (!response.ok) {
+    throw new Error("Failed to create session");
+  }
+  return await response.json();
+}
+
+export async function endSession(apiURL: string) {
+  await fetch(`${apiURL}/room`, {
+    method: "PUT",
+  });
+}
+
+export async function getActiveSession(apiURL: string) {
+  const response = await fetch(`${apiURL}/room`);
+  if (!response.ok) {
+    throw new Error("Failed to fetch active session");
+  }
+  const { room } = await response.json();
+  return room;
+}
+
 export async function leaveRoom({
   apiURL,
   roomId,
