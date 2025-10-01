@@ -1,3 +1,5 @@
+import { Room } from "livekit-client";
+
 export async function fetchToken({
   apiURL,
   roomId,
@@ -18,9 +20,17 @@ export async function fetchToken({
   return { token, session };
 }
 
-export async function initSession(apiURL: string) {
+type InitSessionParams = {
+  apiURL: string;
+  metadata?: object;
+};
+export async function initSession({
+  apiURL,
+  metadata,
+}: InitSessionParams): Promise<{ room: Room }> {
   const response = await fetch(`${apiURL}/room`, {
     method: "POST",
+    body: metadata ? JSON.stringify({ metadata }) : null,
   });
   if (!response.ok) {
     throw new Error("Failed to create session");
