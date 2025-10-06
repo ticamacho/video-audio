@@ -2,6 +2,8 @@
 @import "tailwindcss";
 
 @theme {
+  --font-jakarta-sans: "Plus Jakarta Sans";
+
   /* FONTS */
   --text-xs: 11px;
   --text-xs--line-height: 16px;
