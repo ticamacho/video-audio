@@ -1,0 +1,134 @@
+/* The main DirectSight theme */
+@import "tailwindcss";
+
+@theme {
+  /* FONTS */
+  --text-xs: 11px;
+  --text-xs--line-height: 16px;
+
+  --text-sm: 13px;
+  --text-sm--line-height: 20px;
+
+  --text-base: 15px;
+  --text-base--line-height: 24px;
+
+  --text-md: 15px;
+  --text-md--line-height: 24px;
+
+  --text-lg: 18px;
+  --text-lg--line-height: 28px;
+
+  --text-xl: 24px;
+  --text-xl--line-height: 32px;
+
+  --color-brand-25: #f7fdf9;
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce8;
+  --color-brand-200: #bcf6d1;
+  --color-brand-300: #87eeae;
+  --color-brand-400: #4bdd82;
+  --color-brand-500: #24c361;
+  --color-brand-600: #17a24c;
+  --color-brand-700: #15793c;
+  --color-brand-800: #176435;
+  --color-brand-900: #15522e;
+  --color-brand-950: #052e17;
+
+  --color-gray-25: #fafafa;
+  --color-gray-50: #f2f3f2;
+  --color-gray-100: #dbe1dc;
+  --color-gray-200: #c2cdc5;
+  --color-gray-300: #9caca2;
+  --color-gray-400: #778a7e;
+  --color-gray-500: #5c7064;
+  --color-gray-600: #49584f;
+  --color-gray-700: #3c4841;
+  --color-gray-800: #333c36;
+  --color-gray-900: #2d342f;
+  --color-gray-950: #171c19;
+
+  --color-plum-50: #fdf1ee;
+  --color-plum-100: #fbdfd8;
+  --color-plum-200: #f8c3b3;
+  --color-plum-300: #f6a182;
+  --color-plum-400: #f17e3f;
+  --color-plum-500: #ce6b34;
+  --color-plum-600: #af5a2b;
+  --color-plum-700: #84431e;
+  --color-plum-800: #5c2c12;
+  --color-plum-900: #361707;
+  --color-plum-950: #230d03;
+
+  /* Semantic colors */
+  --color-neutral-primary: var(--color-gray-800);
+  --color-neutral-secondary: var(--color-gray-500);
+}
+
+@layer base {
+  body {
+    font-family: var(--font-jakarta-sans);
+    font-size: var(--text-base);
+    line-height: var(--text-base--line-height);
+    color: var(--color-neutral-primary);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-weight: var(--font-weight-semibold);
+  }
+
+  .tab {
+    font-size: var(--text-base);
+  }
+}
+/*
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-base-100: var(--color-white);
+  --color-base-200: var(--color-gray-50);
+  --color-base-300: var(--color-gray-200);
+  --color-base-content: var(--color-gray-800);
+
+  --color-primary: var(--color-brand-700);
+  --color-primary-content: var(--color-white);
+
+  --color-secondary: oklch(70% 0.25 200);
+  --color-secondary-content: oklch(98% 0.01 200);
+
+  --color-accent: oklch(65% 0.25 160);
+  --color-accent-content: oklch(98% 0.01 160);
+
+  --color-neutral: var(--color-gray-100);
+  --color-neutral-content: var(--color-gray-800);
+
+  --color-info: oklch(70% 0.2 220);
+  --color-info-content: oklch(98% 0.01 220);
+
+  --color-success: oklch(65% 0.25 140);
+  --color-success-content: oklch(98% 0.01 140);
+
+  --color-warning: oklch(80% 0.25 80);
+  --color-warning-content: oklch(20% 0.05 80);
+
+  --color-error: oklch(65% 0.3 30);
+  --color-error-content: oklch(98% 0.01 30);
+
+  --radius-selector: 0.25rem;
+  --radius-field: 0.75rem;
+  --radius-box: 0.5rem;
+
+  --size-selector: 0.25rem;
+  --size-field: 0.25rem;
+
+  --border: 2px;
+
+  --depth: 0;
+  --noise: 0;
+
+  --tab--border-color: var(--color-brand-500) !important;
+}
+*/
