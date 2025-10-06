@@ -5,12 +5,15 @@ import {
   GCPUpload,
 } from "livekit-server-sdk";
 import { readFileSync } from "fs";
+import { join } from "path";
 
 const WS_URL = process.env.NEXT_PUBLIC_LIVEKIT_URL;
 const API_KEY = process.env.LIVEKIT_API_KEY;
 const API_SECRET = process.env.LIVEKIT_API_SECRET;
 const GCS_BUCKET = process.env.GCS_BUCKET;
-const GCS_CREDENTIALS_PATH = process.env.GCS_CREDENTIALS_PATH;
+const GCS_CREDENTIALS_PATH = process.env.GCS_CREDENTIALS_PATH
+  ? join(process.cwd(), process.env.GCS_CREDENTIALS_PATH)
+  : undefined;
 
 type StartRecordingOptions = {
   roomName: string;
