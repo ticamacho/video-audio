@@ -17,12 +17,12 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const baseClasses =
-    "btn rounded-3xl font-bold px-4 min-w-20 text-sm h-10 inline-flex items-center justify-center cursor-pointer relative";
+    "btn rounded-3xl font-bold px-4 min-w-20 text-sm h-10 inline-flex items-center justify-center cursor-pointer relative transition-all duration-200 active:scale-[98%]";
 
   const variantClasses = {
     primary: "bg-brand-700 hover:bg-brand-800 text-white",
     soft: "bg-brand-50 hover:bg-brand-100 text-brand-700",
-    link: "btn-ghost px-2",
+    link: "px-2 hover:bg-gray-50",
   };
 
   return (
