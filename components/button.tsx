@@ -1,12 +1,17 @@
 import { ReactNode } from "react";
 
 type ButtonVariant = "primary" | "soft" | "link";
+type ButtonTone = "neutral" | "brand" | "warning" | "danger";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
   variant?: ButtonVariant;
+  tone?: ButtonTone;
+  size?: "sm" | "base";
   loading?: boolean;
+  className?: string | undefined;
   type?: "button" | "submit" | "reset";
+  ariaLabel?: string;
 }
 
 const Button = ({

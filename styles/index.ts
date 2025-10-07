@@ -1,5 +1,6 @@
 // Export all component styles
 import { controlBarStyles } from "./control-bar";
+import { contextualMenuStyles } from "./contextual-menu";
 import { videoStyles } from "./video";
 import { copyButtonStyles } from "./copy-button";
 import { loadingSpinnerStyles } from "./loading-spinner";
@@ -7,6 +8,7 @@ import { loadingSpinnerStyles } from "./loading-spinner";
 export const styles = {
   controlBar: controlBarStyles,
   video: videoStyles,
+  contextualMenu: contextualMenuStyles,
   copyButton: copyButtonStyles,
   loadingSpinner: loadingSpinnerStyles,
 } as const;
