@@ -3,7 +3,7 @@ export const contextualMenuStyles = {
   triggerBase: "flex items-center justify-center rounded-xl p-2 relative",
 
   // Menu styles
-  menuBase: "bg-surface-white shadow-menu rounded-xl py-2 z-100",
+  menuBase: "bg-surface-white shadow-menu rounded-xl py-2 z-100 bg-white",
 
   // Divider styles
   dividerBase: "bg-neutral-hint h-px my-1.5",
@@ -15,7 +15,7 @@ export const contextualMenuStyles = {
   itemSm: "text-sm px-3 font-medium h-8 min-w-28",
   itemHover: "hover:bg-neutral-100",
   itemFocus: "focus:not-hover:bg-neutral-200",
-  itemContainer: "flex flex-col w-full items-center",
+  itemContainer: "flex w-full items-center",
   itemContainerAdjust: "pl-3",
   itemContainerBaseGap: "2",
   itemContainerSmGap: "1",

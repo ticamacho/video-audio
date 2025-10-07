@@ -4,7 +4,7 @@ import { DotsThreeIcon, Icon } from "@phosphor-icons/react";
 import { IconWeight } from "@phosphor-icons/react";
 import { cn } from "../utils";
 import { DropdownMenu } from "radix-ui";
-import Button from "./button";
+import { Button } from "./button";
 import { styles as ContextualMenuStyles } from "../styles";
 
 export type ContextualMenuItem =

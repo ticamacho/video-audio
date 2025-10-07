@@ -1,9 +1,11 @@
-import VideoLayout from "./video-layout";
-import ControlBar from "./control-bar";
-import ParticipantTile from "./participant-tile";
-import Indicator from "./indicator";
-import Button from "./button";
-import * as Card from "./card";
-import LoadingSpinner from "./loading-spinner";
+export * from "./video-layout";
+export * from "./control-bar";
+export * from "./participant-tile";
+export * from "./indicator";
+export * from "./loading-spinner";
+export * from "./contextual-menu";
+export * from "./button";
+export * from "./table-column-header";
 
-export { VideoLayout, ControlBar, ParticipantTile, Indicator, Card, Button, LoadingSpinner };
+export * as Table from "./table";
+export * as Card from "./card";

@@ -4,6 +4,7 @@ import { contextualMenuStyles } from "./contextual-menu";
 import { videoStyles } from "./video";
 import { copyButtonStyles } from "./copy-button";
 import { loadingSpinnerStyles } from "./loading-spinner";
+import { tableStyles } from "./table";
 
 export const styles = {
   controlBar: controlBarStyles,
@@ -11,6 +12,7 @@ export const styles = {
   contextualMenu: contextualMenuStyles,
   copyButton: copyButtonStyles,
   loadingSpinner: loadingSpinnerStyles,
+  table: tableStyles,
 } as const;
 
 // Utility function to combine styles
