@@ -18,11 +18,10 @@ export const tableStyles = {
   // TableHeading styles
   heading:
     "text-neutral-primary flex items-center border-neutral-hint h-11 border-b text-left text-base font-medium",
-  headingCellSpacing:
-    "not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3",
+  headingCellSpacing: "not-last:not-first:px-3 first:pr-3 last:pl-3",
 
   // TableCell styles
-  cell: "text-neutral-secondary h-14 flex items-center text-base not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3 border-b border-neutral-hint",
+  cell: "text-neutral-secondary h-16 flex items-center text-base not-last:not-first:px-3 first:pr-3 last:pl-3 border-b border-neutral-hint",
 
   // TableCaption styles
   caption: "text-neutral-secondary mt-4 text-sm",

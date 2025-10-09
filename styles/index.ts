@@ -7,6 +7,7 @@ import { loadingSpinnerStyles } from "./loading-spinner";
 import { tableStyles } from "./table";
 import { cardStyles } from "./card";
 import { badgeStyles } from "./badge";
+import { buttonStyles } from "./button";
 
 export const styles = {
   controlBar: controlBarStyles,
@@ -17,6 +18,7 @@ export const styles = {
   table: tableStyles,
   card: cardStyles,
   badge: badgeStyles,
+  button: buttonStyles,
 } as const;
 
 // Utility function to combine styles
