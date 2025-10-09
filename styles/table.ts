@@ -17,7 +17,7 @@ export const tableStyles = {
 
   // TableHeading styles
   heading:
-    "text-neutral-primary flex items-center border-neutral-hint h-11 border-b text-left text-base font-semibold",
+    "text-neutral-primary flex items-center border-neutral-hint h-11 border-b text-left text-base font-medium",
   headingCellSpacing:
     "not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3",
 
