@@ -1,4 +1,53 @@
 /**
+ * Formats a date to the "24 Mar 10:30" format with timezone awareness
+ *
+ * @param dateString ISO date string to format
+ * @param options Configuration options
+ * @returns Formatted date string with timezone info
+ */
+export function formatDateTime(
+  dateString: string | null | undefined,
+  options: {
+    timezone?: string;
+    showTimezone?: boolean;
+  } = {},
+): string | null {
+  if (!dateString) return null;
+
+  const date = new Date(dateString);
+
+  // Auto-detect user's timezone if not provided
+  const timezone =
+    options.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+  // Format with user's timezone
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: timezone,
+    day: "numeric",
+    month: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hour12: false,
+  });
+
+  const formatted = formatter.format(date);
+
+  // Add timezone abbreviation if requested
+  if (options.showTimezone) {
+    const timezoneName = new Intl.DateTimeFormat("en", {
+      timeZone: timezone,
+      timeZoneName: "short",
+    })
+      .formatToParts(date)
+      .find((part) => part.type === "timeZoneName")?.value;
+
+    return `${formatted} ${timezoneName}`;
+  }
+
+  return formatted;
+}
+
+/**
  * Calculates elapsed time from a start timestamp to now
  * @param startTime - ISO timestamp string or Date object
  * @returns Formatted time string in HH:MM:SS format
@@ -6,7 +55,7 @@
 export const calculateElapsedTime = (startTime: string | Date): string => {
   if (!startTime) return "00:00:00";
 
-  const start = typeof startTime === 'string' ? new Date(startTime) : startTime;
+  const start = typeof startTime === "string" ? new Date(startTime) : startTime;
   const now = new Date();
 
   if (isNaN(start.getTime())) return "00:00:00";
@@ -20,7 +69,7 @@ export const calculateElapsedTime = (startTime: string | Date): string => {
   const minutes = Math.floor((elapsedSeconds % 3600) / 60);
   const seconds = elapsedSeconds % 60;
 
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 };
 
 /**
@@ -35,5 +84,5 @@ export const formatElapsedSeconds = (totalSeconds: number): string => {
   const minutes = Math.floor((totalSeconds % 3600) / 60);
   const seconds = totalSeconds % 60;
 
-  return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 };

@@ -10,11 +10,10 @@ export const tableStyles = {
   body: "",
 
   // TableRow styles
-  // row: "not-last:border-neutral-hint not-last:border-b-1",
-  row: "border-neutral-hint border-b-1",
+  row: "",
   rowHoverable:
-    "hover:bg-grey-50 checked:not-hover:bg-grey-50 cursor-pointer transition-colors duration-200 ease-in-out",
-  rowSelected: "bg-grey-50",
+    "hover:bg-neutral-hint checked:not-hover:bg-neutral-hint cursor-pointer transition-colors duration-200 ease-in-out",
+  rowSelected: "bg-neutral-hint",
 
   // TableHeading styles
   heading:
@@ -23,7 +22,7 @@ export const tableStyles = {
     "not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3",
 
   // TableCell styles
-  cell: "text-neutral-primary h-11 flex items-center text-base not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3",
+  cell: "text-neutral-primary h-14 flex items-center text-base not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3 border-b border-neutral-hint",
 
   // TableCaption styles
   caption: "text-neutral-secondary mt-4 text-sm",
