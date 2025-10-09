@@ -22,7 +22,7 @@ export const tableStyles = {
     "not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3",
 
   // TableCell styles
-  cell: "text-neutral-primary h-14 flex items-center text-base not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3 border-b border-neutral-hint",
+  cell: "text-neutral-secondary h-14 flex items-center text-base not-last:not-first:px-3 first:pr-3 first:pl-3 last:pr-3 last:pl-3 border-b border-neutral-hint",
 
   // TableCaption styles
   caption: "text-neutral-secondary mt-4 text-sm",
