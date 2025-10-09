@@ -2,11 +2,11 @@ export const badgeStyles = {
   base: "inline-flex h-full items-center rounded-lg px-2 text-xs font-bold capitalize",
   container: "flex items-center justify-center h-6 py-0.5",
   // Weak weight styles
-  weakNeutral: "text-grey-800 border-1 bg-grey-50 border-grey-200",
-  weakInfo: "text-blue-900 border-1 bg-blue-100 border-blue-400",
-  weakPositive: "text-green-900 border-1 bg-green-100 border-green-400",
-  weakDanger: "text-red-800 border-1 bg-red-100 border-red-300",
-  weakWarning: "text-yellow-800 border-1 bg-yellow-100 border-yellow-300",
+  weakNeutral: "text-grey-700 border bg-neutral-hint border-gray-100",
+  weakInfo: "text-blue-900 border bg-blue-100 border-blue-400",
+  weakPositive: "text-green-900 border bg-green-100 border-green-400",
+  weakDanger: "text-red-800 border bg-red-100 border-red-300",
+  weakWarning: "text-yellow-800 border bg-yellow-100 border-yellow-300",
   // Strong weight styles
   strongNeutral: "bg-grey-800 text-neutral-inverse",
   strongInfo: "bg-blue-900 text-neutral-inverse",
