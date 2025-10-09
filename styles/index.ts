@@ -5,6 +5,7 @@ import { videoStyles } from "./video";
 import { copyButtonStyles } from "./copy-button";
 import { loadingSpinnerStyles } from "./loading-spinner";
 import { tableStyles } from "./table";
+import { cardStyles } from "./card";
 
 export const styles = {
   controlBar: controlBarStyles,
@@ -13,6 +14,7 @@ export const styles = {
   copyButton: copyButtonStyles,
   loadingSpinner: loadingSpinnerStyles,
   table: tableStyles,
+  card: cardStyles,
 } as const;
 
 // Utility function to combine styles

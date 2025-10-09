@@ -1,38 +1,26 @@
 import { cn } from "../utils";
+import { styles as CardStyles } from "../styles";
+
+const styles = CardStyles.card;
 
 interface CardProps {
   className?: string;
   children?: React.ReactNode;
 }
-
 function Root({ children, className }: CardProps) {
   return (
-    <div
-      className={cn(
-        "overflow-hidden rounded-2xl border border-gray-100 bg-white",
-        className,
-      )}
-    >
+    <div className={cn(styles.root, styles.rootShadow, className)}>
       {children}
     </div>
   );
 }
 
 function Content({ children, className }: CardProps) {
-  return <div className={cn("px-6 pt-6", className)}>{children}</div>;
+  return <div className={cn(styles.content, className)}>{children}</div>;
 }
 
 function Actions({ children, className }: CardProps) {
-  return (
-    <div
-      className={cn(
-        "flex items-center justify-end gap-2 px-6 pt-7 pb-6",
-        className,
-      )}
-    >
-      {children}
-    </div>
-  );
+  return <div className={cn(styles.actions, className)}>{children}</div>;
 }
 
 export { Root, Content, Actions };
