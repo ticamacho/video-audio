@@ -41,7 +41,7 @@ interface ResizableVideoLayoutProps {
 
 let BASE_URL: string;
 
-export default function VideoLayout({
+export function VideoLayout({
   baseURL,
   tracks,
   videoRef,
