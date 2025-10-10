@@ -31,7 +31,7 @@ interface ControlBarProps {
   isAnnotationEnabled?: boolean;
 }
 
-export default function ControlBar({
+export function ControlBar({
   onLeave,
   onAnnotationToggle,
   onAnnotationsClear,
