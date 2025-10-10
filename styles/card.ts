@@ -2,7 +2,7 @@ export const cardStyles = {
   // Root card styles
   root: "overflow-hidden rounded-2xl bg-white",
   rootShadow:
-    "shadow-[2px_2px_5px_0_rgba(0,0,0,0.02),0_0_1px_0_var(--color-gray-100,_#DBE1DC)]",
+    "shadow-[2px_2px_5px_0_rgba(0,0,0,0.02),0_0_1px_0_var(--color-gray-200)]",
 
   // Content styles
   contentBase: "px-6 pt-6",
