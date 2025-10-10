@@ -1,13 +1,13 @@
 export const buttonStyles = {
   // Base styling
   baseStyles:
-    "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-300 ease-in-out",
+    "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
   // Size variants
-  sizeBase: "text-sm  min-w-20 rounded-3xl h-10 px-3",
-  sizeSm: "text-xs rounded-2xl h-8 px-[10px] min-w-16",
+  sizeBase: "text-sm min-w-20 rounded-3xl h-10 px-3",
+  sizeSm: "text-sm rounded-2xl h-8 px-[10px] min-w-16 font-medium",
   // Icon-only button sizes
   iconOnlyBase: "h-10 w-10 rounded-xl px-0",
-  iconOnlySm: "h-8 w-8 rounded-xl px-0",
+  iconOnlySm: "h-8 w-10 rounded-xl px-0",
   // Icon sizes
   iconSizeBase: "18",
   iconSizeSm: "14",
@@ -30,7 +30,7 @@ export const buttonStyles = {
     "text-neutral-primary hover:bg-brand-700/50 active:bg-brand-700/50",
   neutralPrimary: "bg-neutral-primary text-neutral-inverse",
   neutralBorder:
-    "text-neutral-primary border border-neutral-fade hover:bg-gray-100 active:bg-gray-100",
+    "text-neutral-primary border border-gray-100 hover:bg-gray-100 active:bg-gray-100",
   neutralLink:
     "text-neutral-primary hover:bg-neutral-hint active:bg-neutral-hint",
   warningPrimary:
