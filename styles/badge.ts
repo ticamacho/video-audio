@@ -16,7 +16,7 @@ export const badgeStyles = {
 
   // Icon styles
   iconSize: "14",
-  iconWeight: "duotone",
+  iconWeight: "bold",
   // Icon colors for weak badges
   weakIconNeutral: "var(--color-grey-700)",
   weakIconInfo: "var(--color-blue-700)",
