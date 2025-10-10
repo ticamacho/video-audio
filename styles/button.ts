@@ -25,7 +25,7 @@ export const buttonStyles = {
   brandPrimary:
     "bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-800",
   brandBorder:
-    "text-neutral-secondary border border-brand-700 hover:bg-brand-800/30 active:bg-brand-800/30",
+    "text-neutral-secondary border border-brand-700 hover:bg-brand-100 active:bg-brand-100",
   brandLink:
     "text-neutral-primary hover:bg-brand-700/50 active:bg-brand-700/50",
   neutralPrimary: "bg-neutral-primary text-neutral-inverse",
