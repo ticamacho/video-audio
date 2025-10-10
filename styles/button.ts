@@ -25,7 +25,7 @@ export const buttonStyles = {
   brandPrimary:
     "bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-800",
   brandBorder:
-    "text-neutral-secondary border-2 border-brand-700 hover:bg-brand-800/30 active:bg-brand-800/30",
+    "text-neutral-secondary border border-brand-700 hover:bg-brand-800/30 active:bg-brand-800/30",
   brandLink:
     "text-neutral-primary hover:bg-brand-700/50 active:bg-brand-700/50",
   neutralPrimary: "bg-neutral-primary text-neutral-inverse",
@@ -36,12 +36,12 @@ export const buttonStyles = {
   warningPrimary:
     "bg-yellow-500 text-yellow-950 hover:bg-yellow-600/80 active:bg-yellow-600/80",
   warningBorder:
-    "text-neutral-primary border-2 border-yellow-500 hover:bg-yellow-500/20 active:bg-yellow-500/20",
+    "text-neutral-primary border border-yellow-500 hover:bg-yellow-500/20 active:bg-yellow-500/20",
   warningLink: "text-yellow-700 hover:bg-yellow-500/50 active:bg-yellow-500/50",
   dangerPrimary:
     "bg-red-600 text-neutral-inverse hover:bg-red-700/80 active:bg-red-700/80",
   dangerBorder:
-    "text-neutral-primary border-2 border-red-600 hover:bg-red-600/15 active:bg-red-600/15",
+    "text-neutral-primary border border-red-600 hover:bg-red-600/15 active:bg-red-600/15",
   dangerLink: "text-red-600 hover:bg-red-600/50 active:bg-red-600/50",
   tappableArea:
     "before:absolute before:content-[''] before:w-full before:cursor-pointer before:h-12 before:min-w-12",
