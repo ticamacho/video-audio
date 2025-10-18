@@ -35,8 +35,9 @@ export const getRecordingFileMetadata = async (
     prefix: `sessions/${sessionId}/`,
   });
 
-  const fileCount = files.length;
-  const sizeBytes = files.reduce((total, file) => {
+  const mp4Files = files.filter((file) => file.name.endsWith(".mp4"));
+  const fileCount = mp4Files.length;
+  const sizeBytes = mp4Files.reduce((total, file) => {
     const rawSize = file.metadata.size;
     const size = rawSize
       ? typeof rawSize === "string"

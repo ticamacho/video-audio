@@ -26,8 +26,6 @@ const constructGCSUrl = (bucket: string, filepath: string): string => {
 export const startRoomRecording = async (
   options: StartRecordingOptions,
 ): Promise<StartRecordingResult> => {
-  const { roomName, sessionId } = options;
-
   const WS_URL = process.env.NEXT_PUBLIC_LIVEKIT_URL;
   const API_KEY = process.env.LIVEKIT_API_KEY;
   const API_SECRET = process.env.LIVEKIT_API_SECRET;
@@ -35,6 +33,7 @@ export const startRoomRecording = async (
   const GCS_CREDENTIALS_PATH = process.env.GCS_CREDENTIALS_PATH
     ? join(process.cwd(), process.env.GCS_CREDENTIALS_PATH)
     : undefined;
+  const { roomName, sessionId } = options;
 
   if (!WS_URL || !API_KEY || !API_SECRET) {
     throw new Error("LiveKit credentials not configured");
@@ -97,11 +96,10 @@ type StopRecordingResult = {
 export const stopRoomRecording = async (
   options: StopRecordingOptions,
 ): Promise<StopRecordingResult> => {
-  const { egressId } = options;
-
   const WS_URL = process.env.NEXT_PUBLIC_LIVEKIT_URL;
   const API_KEY = process.env.LIVEKIT_API_KEY;
   const API_SECRET = process.env.LIVEKIT_API_SECRET;
+  const { egressId } = options;
 
   if (!WS_URL || !API_KEY || !API_SECRET) {
     throw new Error("LiveKit credentials not configured");
@@ -123,18 +121,16 @@ type GetRecordingStatusOptions = {
 export const getRecordingStatus = async (
   options: GetRecordingStatusOptions,
 ) => {
-  const { egressId } = options;
-
   const WS_URL = process.env.NEXT_PUBLIC_LIVEKIT_URL;
   const API_KEY = process.env.LIVEKIT_API_KEY;
   const API_SECRET = process.env.LIVEKIT_API_SECRET;
+  const { egressId } = options;
 
   if (!WS_URL || !API_KEY || !API_SECRET) {
     throw new Error("LiveKit credentials not configured");
   }
 
   const egressClient = new EgressClient(WS_URL, API_KEY, API_SECRET);
-
   const egress = await egressClient.listEgress({ egressId });
 
   if (!egress || egress.length === 0) {
