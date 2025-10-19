@@ -86,3 +86,25 @@ export const formatElapsedSeconds = (totalSeconds: number): string => {
 
   return `${hours.toString().padStart(2, "0")}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 };
+
+/**
+ * Calculate the number of days from now to a given date
+ *
+ * @param date ISO date string or Date object
+ * @returns Number of days (positive for future dates, negative for past dates), or 0 if invalid date
+ */
+export function getDaysFromNow(date: string | Date): string {
+  if (!date) return "N/A";
+
+  const targetDate = typeof date === "string" ? new Date(date) : date;
+
+  if (isNaN(targetDate.getTime())) {
+    return "N/A";
+  }
+
+  const now = new Date();
+  const diffInMs = targetDate.getTime() - now.getTime();
+  const diffInDays = Math.ceil(diffInMs / (1000 * 60 * 60 * 24));
+
+  return `${diffInDays} days`;
+}
