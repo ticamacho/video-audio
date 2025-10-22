@@ -4,7 +4,7 @@ import { styles as CardStyles } from "../styles";
 
 const styles = CardStyles.card;
 
-type CardSize = "base" | "large";
+type CardSize = "base" | "lg";
 
 interface CardContextValue {
   size: CardSize;
@@ -40,7 +40,7 @@ function Content({ children, className }: CardChildProps) {
     <div
       className={cn(
         styles.contentBase,
-        size === "large" && styles.contentLarge,
+        size === "lg" && styles.contentLarge,
         className,
       )}
     >
@@ -56,7 +56,7 @@ function Actions({ children, className }: CardChildProps) {
     <div
       className={cn(
         styles.actionsBase,
-        size === "large" && styles.actionsLarge,
+        size === "lg" && styles.actionsLarge,
         className,
       )}
     >
