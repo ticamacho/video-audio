@@ -8,6 +8,7 @@ import { tableStyles } from "./table";
 import { cardStyles } from "./card";
 import { badgeStyles } from "./badge";
 import { buttonStyles } from "./button";
+import { switchStyles } from "./switch";
 
 export const styles = {
   controlBar: controlBarStyles,
@@ -19,6 +20,7 @@ export const styles = {
   card: cardStyles,
   badge: badgeStyles,
   button: buttonStyles,
+  switch: switchStyles,
 } as const;
 
 // Utility function to combine styles
