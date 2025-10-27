@@ -1,7 +1,7 @@
 export const buttonStyles = {
   // Base styling
   baseStyles:
-    "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
+    "inline-flex font-bold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
   // Size variants
   sizeBase: "text-sm min-w-20 rounded-3xl h-10 px-3",
   sizeSm: "text-sm rounded-2xl h-8 px-[10px] min-w-16",
@@ -26,8 +26,7 @@ export const buttonStyles = {
     "bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-800",
   brandBorder:
     "text-brand-700 ring-1 ring-inset ring-brand-700 hover:bg-brand-50 active:bg-brand-50",
-  brandLink:
-    "text-neutral-primary hover:bg-brand-700/50 active:bg-brand-700/50",
+  brandLink: "text-brand-700 hover:bg-brand-100 active:bg-brand-100",
   neutralPrimary: "bg-neutral-primary text-neutral-inverse",
   neutralBorder:
     "text-neutral-primary ring-1 ring-inset ring-gray-200 hover:bg-gray-50 active:bg-gray-50",
