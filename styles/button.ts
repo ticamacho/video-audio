@@ -1,7 +1,7 @@
 export const buttonStyles = {
   // Base styling
   baseStyles:
-    "inline-flex font-bold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
+    "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
   // Size variants
   sizeBase: "text-sm min-w-20 rounded-3xl h-10 px-3",
   sizeSm: "text-sm rounded-2xl h-8 px-[10px] min-w-16",
@@ -40,8 +40,8 @@ export const buttonStyles = {
   dangerPrimary:
     "bg-red-600 text-neutral-inverse hover:bg-red-700/80 active:bg-red-700/80",
   dangerBorder:
-    "text-neutral-primary border border-red-600 hover:bg-red-600/15 active:bg-red-600/15",
-  dangerLink: "text-red-600 hover:bg-red-600/50 active:bg-red-600/50",
+    "text-red-700 border border-red-400 hover:bg-red-100 active:bg-red-100",
+  dangerLink: "text-red-700 hover:bg-red-600/50 active:bg-red-600/50",
   tappableArea:
     "before:absolute before:content-[''] before:w-full before:cursor-pointer before:h-12 before:min-w-12",
   disabled: "opacity-50 cursor-not-allowed hover:none",
