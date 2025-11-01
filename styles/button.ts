@@ -40,7 +40,7 @@ export const buttonStyles = {
   dangerPrimary:
     "bg-red-600 text-neutral-inverse hover:bg-red-700/80 active:bg-red-700/80",
   dangerBorder:
-    "text-red-700 border border-red-400 hover:bg-red-100 active:bg-red-100",
+    "text-plum-600 ring-1 ring-inset ring-plum-200 hover:bg-plum-50 active:bg-plum-50",
   dangerLink: "text-red-700 hover:bg-red-600/50 active:bg-red-600/50",
   tappableArea:
     "before:absolute before:content-[''] before:w-full before:cursor-pointer before:h-12 before:min-w-12",

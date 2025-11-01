@@ -27,7 +27,7 @@ export const Fieldset = ({
   return (
     <div className={cn("flex flex-col gap-2")}>
       <div className="flex items-baseline justify-between">
-        <span className="font-semibold">{children}</span>
+        <span className="font-medium">{children}</span>
         {showRequiredMessage && (
           <span className="validator-hint text-sm">{hintMessage}</span>
         )}
