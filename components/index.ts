@@ -10,3 +10,4 @@ export * from "./switch";
 
 export * as Table from "./table";
 export * as Card from "./card";
+export * as Dialog from "./dialog";
