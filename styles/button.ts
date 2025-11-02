@@ -26,22 +26,21 @@ export const buttonStyles = {
     "bg-brand-700 text-white hover:bg-brand-800 active:bg-brand-800",
   brandBorder:
     "text-brand-700 ring-1 ring-inset ring-brand-700 hover:bg-brand-50 active:bg-brand-50",
-  brandLink: "text-brand-700 hover:bg-brand-100 active:bg-brand-100",
+  brandLink: "text-brand-700 underline underline-offset-4 px-0",
   neutralPrimary: "bg-neutral-primary text-neutral-inverse",
   neutralBorder:
     "text-neutral-primary ring-1 ring-inset ring-gray-200 hover:bg-gray-50 active:bg-gray-50",
-  neutralLink:
-    "text-neutral-primary hover:bg-neutral-hint active:bg-neutral-hint",
+  neutralLink: "text-neutral-primary underline underline-offset-4 px-0",
   warningPrimary:
     "bg-yellow-500 text-yellow-950 hover:bg-yellow-600/80 active:bg-yellow-600/80",
   warningBorder:
     "text-neutral-primary border border-yellow-500 hover:bg-yellow-500/20 active:bg-yellow-500/20",
-  warningLink: "text-yellow-700 hover:bg-yellow-500/50 active:bg-yellow-500/50",
+  warningLink: "text-yellow-700 underline underline-offset-4 px-0",
   dangerPrimary:
     "bg-red-600 text-neutral-inverse hover:bg-red-700/80 active:bg-red-700/80",
   dangerBorder:
     "text-red-600 ring-1 ring-inset ring-red-300 hover:bg-red-50 active:bg-red-50",
-  dangerLink: "text-red-700 hover:bg-red-600/50 active:bg-red-600/50",
+  dangerLink: "text-red-700 underline underline-offset-4 px-0",
   tappableArea:
     "before:absolute before:content-[''] before:w-full before:cursor-pointer before:h-12 before:min-w-12",
   disabled: "opacity-50 cursor-not-allowed hover:none",
