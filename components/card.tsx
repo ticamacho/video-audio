@@ -1,3 +1,5 @@
+"use client";
+
 import { createContext, useContext } from "react";
 import { cn } from "../utils";
 import { styles as CardStyles } from "../styles";
