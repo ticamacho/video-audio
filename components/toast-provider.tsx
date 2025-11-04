@@ -4,8 +4,8 @@ import { createContext, useContext, useState, useCallback } from "react";
 import * as Toast from "./toast";
 
 type ToastMessage = {
-  title: string;
-  description?: string;
+  title: React.ReactNode;
+  description?: React.ReactNode;
 };
 
 type ToastContextValue = {
@@ -42,13 +42,9 @@ export const ToastProvider = ({ children }: ToastProviderProps) => {
         <Toast.Root open={open} onOpenChange={setOpen}>
           {message && (
             <>
-              <Toast.Title className="text-base font-semibold">
-                {message.title}
-              </Toast.Title>
+              <Toast.Title>{message.title}</Toast.Title>
               {message.description && (
-                <Toast.Description className="text-sm text-neutral-secondary">
-                  {message.description}
-                </Toast.Description>
+                <Toast.Description>{message.description}</Toast.Description>
               )}
             </>
           )}
