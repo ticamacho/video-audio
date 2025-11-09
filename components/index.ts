@@ -11,5 +11,4 @@ export * from "./switch";
 export * as Table from "./table";
 export * as Card from "./card";
 export * as Dialog from "./dialog";
-export * as Toast from "./toast";
 export { ToastProvider, useToast } from "./toast-provider";
