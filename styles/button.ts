@@ -4,7 +4,7 @@ export const buttonStyles = {
     "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
   // Size variants
   sizeBase: "text-sm min-w-20 rounded-3xl h-10 px-3",
-  sizeSm: "text-sm rounded-2xl h-8 px-[10px] min-w-16",
+  sizeSm: "text-sm rounded-2xl h-8 px-2.5 min-w-16",
   // Icon-only button sizes
   iconOnlyBase: "h-10 w-10 rounded-xl px-0",
   iconOnlySm: "h-8 w-10 rounded-xl px-0",
@@ -42,7 +42,7 @@ export const buttonStyles = {
     "text-red-600 ring-1 ring-inset ring-red-300 hover:bg-red-50 active:bg-red-50",
   dangerLink: "text-red-700 underline underline-offset-4 px-0",
   tappableArea:
-    "before:absolute before:content-[''] before:w-full before:cursor-pointer before:h-12 before:min-w-12",
+    "before:absolute before:content-[''] before:w-full before:cursor-pointer disabled:cursor-not-allowed before:h-12 before:min-w-12",
   disabled: "opacity-50 cursor-not-allowed hover:none",
   loading:
     "inline-block h-4 w-4 animate-spin rounded-full border-2 border-solid border-current border-r-transparent",

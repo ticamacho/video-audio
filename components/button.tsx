@@ -126,7 +126,7 @@ const Button = ({
   // Combine all classes
   const buttonClasses = cn(
     styles.baseStyles,
-    styles.tappableArea,
+    !disabled && !loading && styles.tappableArea,
     sizeClasses,
     variantClasses,
     disabledClasses,
