@@ -1,10 +1,10 @@
 export const buttonStyles = {
   // Base styling
   baseStyles:
-    "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%]",
+    "inline-flex font-semibold items-center justify-center relative gap-2 overflow-visible group transition-all duration-[250ms] ease-in-out active:scale-[97%] cursor-pointer",
   // Size variants
   sizeBase: "text-sm min-w-20 rounded-3xl h-10 px-3",
-  sizeSm: "text-sm rounded-2xl h-8 px-2.5 min-w-16",
+  sizeSm: "text-sm rounded-2xl h-8 px-[10px] min-w-16",
   // Icon-only button sizes
   iconOnlyBase: "h-10 w-10 rounded-xl px-0",
   iconOnlySm: "h-8 w-10 rounded-xl px-0",
