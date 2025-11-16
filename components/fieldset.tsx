@@ -1,17 +1,6 @@
 import { ReactNode } from "react";
 import { cn } from "../utils";
 
-// type FieldsetProps = {
-//   children: ReactNode;
-//   hintMessage?: string;
-//   onChange?: (value: string) => void;
-//   required?: boolean;
-//   value?: string | null | undefined;
-//   placeholder?: string;
-//   className?: string;
-//   disabled?: boolean;
-// };
-
 interface FieldsetProps extends React.InputHTMLAttributes<HTMLInputElement> {
   children: ReactNode;
   hintMessage?: string;
@@ -42,7 +31,7 @@ export const Fieldset = ({
           required={required}
           disabled={disabled}
           className={cn(
-            "w-full border-gray-100 text-base text-neutral-primary h-12 border rounded-xl px-3",
+            "w-full border-gray-100 text-base text-neutral-primary h-12 border rounded-xl px-3 disabled:opacity-50",
             className,
             showRequiredMessage && "validator",
           )}
