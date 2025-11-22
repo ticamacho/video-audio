@@ -37,7 +37,7 @@ export const buttonStyles = {
     "text-neutral-primary border border-yellow-500 hover:bg-yellow-500/20 active:bg-yellow-500/20",
   warningLink: "text-yellow-700 underline underline-offset-4 px-0",
   dangerPrimary:
-    "bg-red-600 text-neutral-inverse hover:bg-red-700/80 active:bg-red-700/80",
+    "bg-red-600 text-white hover:bg-red-700/80 active:bg-red-700/80",
   dangerBorder:
     "text-red-600 ring-1 ring-inset ring-red-300 hover:bg-red-50 active:bg-red-50",
   dangerLink: "text-red-700 underline underline-offset-4 px-0",
