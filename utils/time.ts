@@ -1,3 +1,12 @@
+export function formatDate(dateString: string | null): string {
+  if (!dateString) return "N/A";
+  return new Date(dateString).toLocaleDateString("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  });
+}
+
 /**
  * Formats a date to the "24 Mar 10:30" format with timezone awareness
  *
