@@ -27,7 +27,7 @@ export const buttonStyles = {
   brandBorder:
     "text-brand-700 ring-1 ring-inset ring-brand-700 hover:bg-brand-50 active:bg-brand-50",
   brandLink: "text-brand-700 underline underline-offset-4 px-0",
-  neutralPrimary: "bg-neutral-primary text-neutral-inverse",
+  neutralPrimary: "bg-neutral-secondary text-neutral-inverse",
   neutralBorder:
     "text-neutral-primary ring-1 ring-inset ring-gray-200 hover:bg-gray-50 active:bg-gray-50",
   neutralLink: "text-neutral-primary underline underline-offset-4 px-0",
