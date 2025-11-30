@@ -7,6 +7,7 @@ export * from "./contextual-menu";
 export * from "./button";
 export * from "./table-column-header";
 export * from "./switch";
+export * from "./empty-state";
 
 export * as Table from "./table";
 export * as Card from "./card";

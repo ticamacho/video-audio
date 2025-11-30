@@ -11,6 +11,7 @@ import { buttonStyles } from "./button";
 import { switchStyles } from "./switch";
 import { dialogStyles } from "./dialog";
 import { toastStyles } from "./toast";
+import { emptyStateStyles } from "./empty-state";
 
 export const styles = {
   controlBar: controlBarStyles,
@@ -25,6 +26,7 @@ export const styles = {
   switch: switchStyles,
   dialog: dialogStyles,
   toast: toastStyles,
+  emptyState: emptyStateStyles,
 } as const;
 
 // Utility function to combine styles
