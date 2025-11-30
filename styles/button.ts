@@ -12,7 +12,7 @@ export const buttonStyles = {
   iconSizeBase: "20",
   iconSizeSm: "16",
   // Icon colors
-  iconBrandPrimary: "var(--color-brand-950)",
+  iconBrandPrimary: "var(--color-neutral-inverse)",
   iconBrandNeutral: "var(--color-brand-700)",
   iconNeutralPrimary: "var(--color-brand-500)",
   iconWarningPrimary: "var(--color-yellow-950)",
