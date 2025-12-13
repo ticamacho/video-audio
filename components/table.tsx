@@ -3,6 +3,7 @@
 import React from "react";
 import { cn } from "../utils";
 import { styles as TableStyles } from "../styles";
+import { motion } from "framer-motion";
 
 // Root Table component
 interface TableProps extends React.HTMLAttributes<HTMLTableElement> {
@@ -92,11 +93,20 @@ function TableRow({
     [themeStyles.rowHoverable]: href || onClick,
     [themeStyles.rowSelected]: selected,
   };
+  const animationProps = {
+    initial: { opacity: 0, scale: 1.025 },
+    animate: { opacity: 1, scale: 1 },
+  };
 
+  // Use simple animation to call attention to the row
   return (
-    <tr className={cn(rowStyles, className)} onClick={handleClick}>
+    <motion.tr
+      className={cn(rowStyles, className)}
+      onClick={handleClick}
+      {...animationProps}
+    >
       {children}
-    </tr>
+    </motion.tr>
   );
 }
 
