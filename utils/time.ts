@@ -117,3 +117,31 @@ export function getDaysFromNow(date: string | Date): string {
 
   return `${diffInDays} days`;
 }
+
+/**
+ * Formats duration between two timestamps as "Xm Ys"
+ *
+ * @param startTime ISO timestamp string for start
+ * @param endTime ISO timestamp string for end
+ * @returns Formatted duration string like "12m 23s" or "N/A" if invalid
+ */
+export function formatDuration(
+  startTime: string | null,
+  endTime: string | null,
+): string {
+  if (!startTime || !endTime) return "N/A";
+
+  const start = new Date(startTime);
+  const end = new Date(endTime);
+
+  if (isNaN(start.getTime()) || isNaN(end.getTime())) return "N/A";
+
+  const durationSeconds = Math.floor((end.getTime() - start.getTime()) / 1000);
+
+  if (durationSeconds < 0) return "N/A";
+
+  const minutes = Math.floor(durationSeconds / 60);
+  const seconds = durationSeconds % 60;
+
+  return `${minutes}m ${seconds}s`;
+}
