@@ -1,5 +1,6 @@
 import {
   EgressClient,
+  EgressStatus,
   EncodedFileType,
   EncodedFileOutput,
   GCPUpload,
@@ -106,6 +107,25 @@ export const stopRoomRecording = async (
   }
 
   const egressClient = new EgressClient(WS_URL, API_KEY, API_SECRET);
+
+  const egress = await egressClient.listEgress({ egressId });
+
+  if (!egress || egress.length === 0) {
+    throw new Error("Recording not found");
+  }
+
+  const status = egress[0].status;
+
+  // Avoid forcing stop if already in a terminal state
+  if (
+    status === EgressStatus.EGRESS_ABORTED ||
+    status === EgressStatus.EGRESS_COMPLETE ||
+    status === EgressStatus.EGRESS_FAILED
+  ) {
+    return {
+      recordingStopped: false,
+    };
+  }
 
   await egressClient.stopEgress(egressId);
 
