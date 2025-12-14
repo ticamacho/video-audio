@@ -12,6 +12,7 @@ import { switchStyles } from "./switch";
 import { dialogStyles } from "./dialog";
 import { toastStyles } from "./toast";
 import { emptyStateStyles } from "./empty-state";
+import { searchFieldStyles } from "./search-field";
 
 export const styles = {
   controlBar: controlBarStyles,
@@ -27,6 +28,7 @@ export const styles = {
   dialog: dialogStyles,
   toast: toastStyles,
   emptyState: emptyStateStyles,
+  searchField: searchFieldStyles,
 } as const;
 
 // Utility function to combine styles
