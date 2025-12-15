@@ -49,15 +49,7 @@ function TableBody({ className, children, ...props }: TableBodyProps) {
 
   return (
     <tbody className={cn(styles.body, className)} {...props}>
-      {hasChildren ? (
-        children
-      ) : (
-        <TableRow>
-          <TableCell className={styles.cell}>
-            <div className={styles.noChildren}>No requests found</div>
-          </TableCell>
-        </TableRow>
-      )}
+      {hasChildren && children}
     </tbody>
   );
 }
