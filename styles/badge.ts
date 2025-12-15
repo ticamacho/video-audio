@@ -1,5 +1,5 @@
 export const badgeStyles = {
-  base: "inline-flex h-full items-center rounded-lg px-2 text-xs font-bold capitalize",
+  base: "inline-flex h-full items-center rounded-lg px-2 text-xs font-semibold capitalize",
   container: "flex items-center justify-center h-6 py-0.5",
   // Weak weight styles
   weakNeutral: "text-grey-700 border bg-neutral-hint border-gray-100",
