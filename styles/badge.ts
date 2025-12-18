@@ -3,10 +3,10 @@ export const badgeStyles = {
   container: "flex items-center justify-center h-6 py-0.5",
   // Weak weight styles
   weakNeutral: "text-grey-700 border bg-neutral-hint border-gray-100",
-  weakInfo: "text-blue-800 border bg-blue-100 border-blue-400",
-  weakPositive: "text-green-700 border bg-green-100 border-green-400",
-  weakDanger: "text-red-700 border bg-red-100 border-red-300",
-  weakWarning: "text-yellow-700 border bg-yellow-100 border-yellow-300",
+  weakInfo: "text-blue-800 border bg-blue-100 border-blue-200",
+  weakPositive: "text-green-700 border bg-green-100 border-green-200",
+  weakDanger: "text-red-700 border bg-red-100 border-red-200",
+  weakWarning: "text-yellow-700 border bg-yellow-100 border-yellow-200",
   // Strong weight styles
   strongNeutral: "bg-grey-800 text-neutral-inverse",
   strongInfo: "bg-blue-900 text-neutral-inverse",
