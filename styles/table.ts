@@ -11,7 +11,7 @@ export const tableStyles = {
 
   // TableRow styles
   row: "group",
-  rowHoverable: "cursor-pointer",
+  rowHoverable: "cursor-pointer selectable",
   rowSelected: "selected",
 
   // TableHeading styles
@@ -20,7 +20,7 @@ export const tableStyles = {
   headingCellSpacing: "not-last:not-first:px-3 first:pr-3 last:pl-3",
 
   // TableCell styles
-  cell: "group-hover:bg-neutral-fade checked:not-group-hover:bg-neutral-fade group-[.selected]:bg-neutral-fade transition-colors duration-200 ease-in-out text-neutral-secondary h-16 flex items-center text-base not-last:not-first:px-3 first:pr-3 last:pl-3 border-b border-neutral-hint px-2",
+  cell: "group-hover:group-[.selectable]:bg-neutral-fade checked:not-group-hover:bg-neutral-fade group-[.selected]:bg-neutral-fade transition-colors duration-200 ease-in-out text-neutral-secondary h-16 flex items-center text-base not-last:not-first:px-3 first:pr-3 last:pl-3 border-b border-neutral-hint px-2",
 
   // TableCaption styles
   caption: "text-neutral-secondary mt-4 text-sm",
