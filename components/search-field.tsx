@@ -55,7 +55,12 @@ export const SearchField = ({
   return (
     <div className={searchFieldStyles.container}>
       {children && <span className={searchFieldStyles.label}>{children}</span>}
-      <div className={searchFieldStyles.inputWrapper}>
+      <div
+        className={cn(
+          searchFieldStyles.inputWrapper,
+          value.length > 0 && searchFieldStyles.inputActive,
+        )}
+      >
         <div className={searchFieldStyles.iconContainer}>
           {value.length > 0 ? (
             <Button
