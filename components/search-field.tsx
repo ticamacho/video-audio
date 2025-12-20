@@ -9,12 +9,13 @@ import { Button } from "./button";
 export interface SearchFieldProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    "type" | "value" | "onChange" | "onKeyDown"
+    "type" | "value" | "onChange" | "onKeyDown" | "defaultValue"
   > {
   children?: ReactNode;
   placeholder?: string;
   disabled?: boolean;
   className?: string;
+  defaultValue?: string | null;
   onSearch?: (value: string) => void;
   onClear?: () => void;
 }
@@ -24,11 +25,12 @@ export const SearchField = ({
   placeholder = "Search",
   disabled = false,
   className,
+  defaultValue,
   onSearch,
   onClear,
   ...props
 }: SearchFieldProps) => {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue ?? "");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
