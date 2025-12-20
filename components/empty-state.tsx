@@ -11,8 +11,8 @@ interface EmptyStateProps {
   imageAlt: string;
   title: string;
   description: string;
-  actionLabel: string;
-  onClick: () => void;
+  actionLabel?: string;
+  onClick?: () => void;
   className?: string;
 }
 
@@ -36,9 +36,11 @@ export function EmptyState({
           <h3 className={styles.title}>{title}</h3>
           <p className={styles.description}>{description}</p>
         </div>
-        <div className={styles.buttonContainer}>
-          <Button onClick={onClick}>{actionLabel}</Button>
-        </div>
+        {actionLabel && onClick && (
+          <div className={styles.buttonContainer}>
+            <Button onClick={onClick}>{actionLabel}</Button>
+          </div>
+        )}
       </div>
     </div>
   );
