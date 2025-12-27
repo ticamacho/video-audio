@@ -9,7 +9,7 @@ export const buttonStyles = {
   iconOnlyBase: "h-10 w-10 rounded-xl px-0",
   iconOnlySm: "h-8 w-10 rounded-xl px-0",
   // Icon sizes
-  iconSizeBase: "20",
+  iconSizeBase: "18",
   iconSizeSm: "16",
   // Icon colors
   iconBrandPrimary: "var(--color-neutral-inverse)",
