@@ -38,7 +38,9 @@ export function EmptyState({
         </div>
         {actionLabel && onClick && (
           <div className={styles.buttonContainer}>
-            <Button onClick={onClick}>{actionLabel}</Button>
+            <Button variant="border" onClick={onClick}>
+              {actionLabel}
+            </Button>
           </div>
         )}
       </div>

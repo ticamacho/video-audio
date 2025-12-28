@@ -1,6 +1,5 @@
 export const dialogStyles = {
-  overlay:
-    "fixed inset-0 bg-black/30 data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
+  overlay: "fixed inset-0 bg-black/30",
   content:
     "fixed left-[50%] top-[50%] z-50 w-full max-w-xl translate-x-[-50%] translate-y-[-50%] bg-white rounded-2xl shadow-lg",
   header: "flex items-center justify-between px-10 h-20",
