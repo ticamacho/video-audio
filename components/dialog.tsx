@@ -47,47 +47,43 @@ const DialogContent = ({ title, children, className }: DialogContentProps) => {
   const { open } = useContext(DialogContext);
 
   return (
-    <Dialog.Portal forceMount>
-      <AnimatePresence mode="wait">
-        {open && (
-          <>
-            <Dialog.Overlay asChild forceMount>
-              <motion.div
-                className={cn(dialogStyles.overlay)}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ duration: 0.35 }}
-              />
-            </Dialog.Overlay>
-            <Dialog.Content asChild forceMount>
-              <motion.div
-                className={cn(dialogStyles.content, className)}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.25 }}
-              >
-                <div className={cn(dialogStyles.header)}>
-                  <Dialog.Title className={cn(dialogStyles.title)}>
-                    {title}
-                  </Dialog.Title>
-                  <Dialog.Close asChild className={cn(dialogStyles.close)}>
-                    <Button variant="link" tone="neutral">
-                      <XIcon
-                        weight="bold"
-                        color="var(--color-neutral-primary)"
-                      />
-                    </Button>
-                  </Dialog.Close>
-                </div>
-                <div className={cn(dialogStyles.body)}>{children}</div>
-              </motion.div>
-            </Dialog.Content>
-          </>
-        )}
-      </AnimatePresence>
-    </Dialog.Portal>
+    <AnimatePresence>
+      {open && (
+        <Dialog.Portal forceMount={true}>
+          <Dialog.Overlay className={cn(dialogStyles.overlay)} asChild>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+            />
+          </Dialog.Overlay>
+          <Dialog.Content
+            className={cn(dialogStyles.content, className)}
+            asChild
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
+            >
+              <div className={cn(dialogStyles.header)}>
+                <Dialog.Title className={cn(dialogStyles.title)}>
+                  {title}
+                </Dialog.Title>
+                <Dialog.Close asChild className={cn(dialogStyles.close)}>
+                  <Button variant="link" tone="neutral">
+                    <XIcon weight="bold" color="var(--color-neutral-primary)" />
+                  </Button>
+                </Dialog.Close>
+              </div>
+              <div className={cn(dialogStyles.body)}>{children}</div>
+            </motion.div>
+          </Dialog.Content>
+        </Dialog.Portal>
+      )}
+    </AnimatePresence>
   );
 };
 
