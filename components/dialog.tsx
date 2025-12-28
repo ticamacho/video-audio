@@ -55,7 +55,7 @@ const DialogContent = ({ title, children, className }: DialogContentProps) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
+              transition={{ duration: 0.35 }}
             />
           </Dialog.Overlay>
           <Dialog.Content
@@ -63,10 +63,10 @@ const DialogContent = ({ title, children, className }: DialogContentProps) => {
             asChild
           >
             <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.2 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.25 }}
             >
               <div className={cn(dialogStyles.header)}>
                 <Dialog.Title className={cn(dialogStyles.title)}>
