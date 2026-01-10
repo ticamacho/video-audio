@@ -23,6 +23,9 @@
   --text-xl: 22px;
   --text-xl--line-height: 28px;
 
+  --text-3xl: 32px;
+  ---text-3xl--line-height: 40px;
+
   --color-brand-25: #f7fdf9;
   --color-brand-50: #f0fdf4;
   --color-brand-100: #dcfce8;
